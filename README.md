@@ -12,7 +12,7 @@ My newly acquired experience from this re-write of this project in Akka.NET will
 
 If you are interested in Akka.NET and want to see a project being re-written with actors, then follow this project. You can compare the original commit to the latest commit to see the evolution of the project. It is probably a rare moment to see a live project, that is originally written with TPL Dataflow, being re-written in Akka.NET. So, enjoy, and don't forget to leave your comments and suggestions on the [Discussions](https://github.com/tarikguney/manager-automation-v2/discussions) page.
 
-
+------
 
 Developed with the following technologies by [@tarikguney](https://github.com/tarikguney)
 
