@@ -1,3 +1,19 @@
+# Important Note
+
+There is already a project of mine named [Manager Automation](https://github.com/tarikguney/manager-automation), but as I was learning [Akka.NET](https://getakka.net), I decided to re-write the entire project in Akka. The original version was written in [TPL Dataflow](https://docs.microsoft.com/en-us/dotnet/standard/parallel-programming/dataflow-task-parallel-library), which is a great library; but overall, I found the [Actor Model](https://en.wikipedia.org/wiki/Actor_model) constructs more straightforward in Akka than TPL Dataflow. Akka also offers more constructs for the development teams to focus on the business results rather than re-inventing various existing concepts.  Some of the areas Akka.NET offers better development support that I am interested in this project are:
+
+1. [Dependency Injection](https://getakka.net/articles/actors/dependency-injection.html)
+
+2. [Streaming](https://getakka.net/articles/streams/introduction.html)
+
+3. [Testing Actors](https://getakka.net/articles/actors/testing-actor-systems.html)
+
+My newly acquired experience from this re-write of this project in Akka.NET will be incorporated into [Projekt Hive](https://github.com/tarikguney/projekt-hive), which is planned to be a complete re-imagination of [Manager Automation](https://www.github.com/tarikguney/manager-automation) from ground up.
+
+If you are interested in Akka.NET and want to see a project being re-written with actors, then follow this project. You can compare the original commit to the latest commit to see the evolution of the project. It is probably a rare moment to see a live project, that is originally written with TPL Dataflow, being re-written in Akka.NET. So, enjoy, and don't forget to leave your comments and suggestions on the [Discussions](https://github.com/tarikguney/manager-automation-v2/discussions) page.
+
+
+
 Developed with the following technologies by [@tarikguney](https://github.com/tarikguney)
 
 ![](./assets/logo/azure-functions.png) ![](./assets/logo/dotnet-core-logo.png)
