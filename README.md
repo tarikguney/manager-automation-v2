@@ -8,7 +8,7 @@ There is already a project of mine named [Manager Automation](https://github.com
 
 3. [Testing Actors](https://getakka.net/articles/actors/testing-actor-systems.html)
 
-My newly acquired experience from this re-write of this project in Akka.NET will be incorporated into [Projekt Hive](https://github.com/tarikguney/projekt-hive), which is planned to be a complete re-imagination of [Manager Automation](https://www.github.com/tarikguney/manager-automation) from ground up.
+My newly acquired experience from this re-write of this project in Akka.NET will be incorporated into [Projekt Hive](https://github.com/tarikguney/projekt-hive), which is planned to be a complete re-imagination of [Manager Automation](https://www.github.com/tarikguney/manager-automation) from the ground up.
 
 If you are interested in Akka.NET and want to see a project being re-written with actors, then follow this project. You can compare the original commit to the latest commit to see the evolution of the project. It is probably a rare moment to see a live project, that is originally written with TPL Dataflow, being re-written in Akka.NET. So, enjoy, and don't forget to leave your comments and suggestions on the [Discussions](https://github.com/tarikguney/manager-automation-v2/discussions) page.
 
