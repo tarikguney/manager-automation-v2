@@ -9,13 +9,13 @@ using TarikGuney.ManagerAutomation.SettingsModels;
 
 namespace TarikGuney.ManagerAutomation.Actors
 {
-	public class ActivatedWorkItemNotFoundActor : ReceiveActor
+	public class EngineersWithoutActivatedWorkItemsFinderActor : ReceiveActor
 	{
 		private readonly List<DevOpsChatUserMap> _devOpsChatUserMaps;
 		private readonly IterationInfo _currentIteration;
 		private readonly ILogger _logger;
 
-		public ActivatedWorkItemNotFoundActor(IOptions<List<DevOpsChatUserMap>> devOpsChatUserMapsOptions,
+		public EngineersWithoutActivatedWorkItemsFinderActor(IOptions<List<DevOpsChatUserMap>> devOpsChatUserMapsOptions,
 			IOptions<IterationInfo> currentIterationOptions, ILogger logger)
 		{
 			_devOpsChatUserMaps = devOpsChatUserMapsOptions.Value;

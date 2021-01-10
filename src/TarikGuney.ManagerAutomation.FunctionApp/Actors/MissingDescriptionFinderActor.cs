@@ -10,14 +10,14 @@ using TarikGuney.ManagerAutomation.SettingsModels;
 
 namespace TarikGuney.ManagerAutomation.Actors
 {
-    public class MissingDescriptionActor : ReceiveActor
+    public class MissingDescriptionFinderActor : ReceiveActor
     {
         private readonly ILogger _logger;
         private readonly AzureDevOpsSettings _azureDevOpsSettings;
         private readonly List<DevOpsChatUserMap> _devOpsChatUserMaps;
         private readonly IterationInfo _currentIteration;
 
-        public MissingDescriptionActor(IOptions<AzureDevOpsSettings> azureDevOpsSettingsOptions,
+        public MissingDescriptionFinderActor(IOptions<AzureDevOpsSettings> azureDevOpsSettingsOptions,
             IOptions<List<DevOpsChatUserMap>> devOpsChatUserMapsOptions,
             IOptions<IterationInfo> currentIterationOptions, ILogger logger)
         {
