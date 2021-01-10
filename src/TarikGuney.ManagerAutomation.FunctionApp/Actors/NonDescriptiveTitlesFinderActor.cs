@@ -37,7 +37,7 @@ namespace TarikGuney.ManagerAutomation.Actors
 
             if (!offendingWorkItems.Any())
             {
-                Sender.Tell(new ActorResponse<List<string>>(null, false));
+                Sender.Tell(new ActorResponse<IReadOnlyList<string>>(null, false));
             }
 
             var messages = new List<string>();
@@ -70,7 +70,7 @@ namespace TarikGuney.ManagerAutomation.Actors
                     $"{chatDisplayName}, add a *more descriptive title* to <{workItemUrl}|{workItemTitle}>.");
             }
 
-            Sender.Tell(new ActorResponse<List<string>>(messages, true));
+            Sender.Tell(new ActorResponse<IReadOnlyList<string>>(messages, true));
         }
     }
 }

@@ -21,10 +21,10 @@ namespace TarikGuney.ManagerAutomation.Actors
 			_devOpsChatUserMaps = devOpsChatUserMapsOptions.Value;
 			_logger = logger;
 			_currentIteration = currentIterationOptions.Value;
-			Receive<List<JObject>>(HandleIncomingWorkItems);
+			Receive<IReadOnlyList<JObject>>(HandleIncomingWorkItems);
 		}
 
-		private void HandleIncomingWorkItems(List<JObject> workItems)
+		private void HandleIncomingWorkItems(IReadOnlyList<JObject> workItems)
 		{
 			var offendingWorkItems = workItems
 				.Where(wi => wi["fields"] is JObject fields &&
@@ -35,7 +35,7 @@ namespace TarikGuney.ManagerAutomation.Actors
 
 			if (!offendingWorkItems.Any())
 			{
-				Sender.Tell(new ActorResponse<List<string>>(null, false));
+				Sender.Tell(new ActorResponse<IReadOnlyList<string>>(null, false));
 			}
 
 			var messages = new List<string>();
@@ -78,7 +78,7 @@ namespace TarikGuney.ManagerAutomation.Actors
 					$"{chatDisplayName}, *activate the work item* you are working on.");
 			}
 
-			Sender.Tell(new ActorResponse<List<string>>(messages, true));
+			Sender.Tell(new ActorResponse<IReadOnlyList<string>>(messages, true));
 		}
 	}
 }

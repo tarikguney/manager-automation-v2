@@ -10,38 +10,35 @@ using TarikGuney.ManagerAutomation.SettingsModels;
 
 namespace TarikGuney.ManagerAutomation.Actors
 {
-    public class MissingDescriptionFinderActor : ReceiveActor
+    public class WorkItemsWithoutEstimationFinderActor : ReceiveActor
     {
         private readonly ILogger _logger;
         private readonly AzureDevOpsSettings _azureDevOpsSettings;
         private readonly List<DevOpsChatUserMap> _devOpsChatUserMaps;
         private readonly IterationInfo _currentIteration;
 
-        public MissingDescriptionFinderActor(IOptions<AzureDevOpsSettings> azureDevOpsSettingsOptions,
-            IOptions<List<DevOpsChatUserMap>> devOpsChatUserMapsOptions,
-            IOptions<IterationInfo> currentIterationOptions, ILogger logger)
+        public WorkItemsWithoutEstimationFinderActor(ILogger logger,
+            IOptions<AzureDevOpsSettings> azureDevOpsSettingsOptions,
+            IOptions<List<DevOpsChatUserMap>> devOpsChatUserMapOptions, IOptions<IterationInfo> currentIterationOptions)
         {
             _logger = logger;
             _azureDevOpsSettings = azureDevOpsSettingsOptions.Value;
-            _devOpsChatUserMaps = devOpsChatUserMapsOptions.Value;
+            _devOpsChatUserMaps = devOpsChatUserMapOptions.Value;
             _currentIteration = currentIterationOptions.Value;
-
             Receive<IReadOnlyList<JObject>>(HandleIncomingWorkItems);
         }
 
         private void HandleIncomingWorkItems(IReadOnlyList<JObject> workItems)
         {
+            // Property names that has periods in them won't be parsed by Json.NET as opposed to online JSON Parser tools
+            // eg. $.value[?(@.fields['Microsoft.VSTS.Scheduling.StoryPoints'] == null && @.fields['System.AssignedTo'] != null)]
+            // Because of that reason, I had to use enumeration below.
             var offendingWorkItems = workItems
                 .Where(wi => wi["fields"] is JObject fields &&
                              new List<string>() {"Bug", "User Story"}.Contains(fields["System.WorkItemType"]
                                  .Value<string>()) &&
-                             ((fields["System.WorkItemType"].Value<string>() == "Bug" &&
-                               !fields.ContainsKey("Microsoft.VSTS.TCM.ReproSteps")
-                              ) ||
-                              (fields["System.WorkItemType"].Value<string>() == "User Story" &&
-                               !fields.ContainsKey("System.Description")
-                              )
-                             )).ToList();
+                             !fields.ContainsKey("Microsoft.VSTS.Scheduling.StoryPoints") &&
+                             fields.ContainsKey("System.AssignedTo")).ToList();
 
             if (!offendingWorkItems.Any())
             {
@@ -55,9 +52,9 @@ namespace TarikGuney.ManagerAutomation.Actors
 
             foreach (var offendingWorkItem in offendingWorkItems)
             {
-                var userDisplayName = offendingWorkItem["fields"]?["System.CreatedBy"]?["displayName"]
+                var userDisplayName = offendingWorkItem["fields"]?["System.AssignedTo"]?["displayName"]
                     ?.Value<string>();
-                var userEmail = offendingWorkItem["fields"]?["System.CreatedBy"]?["uniqueName"]?.Value<string>();
+                var userEmail = offendingWorkItem["fields"]?["System.AssignedTo"]?["uniqueName"]?.Value<string>();
                 var devOpsGoogleChatUserMap =
                     _devOpsChatUserMaps.SingleOrDefault(t =>
                         t.AzureDevOpsEmail.Equals(userEmail, StringComparison.InvariantCultureIgnoreCase));
@@ -70,11 +67,11 @@ namespace TarikGuney.ManagerAutomation.Actors
                     : $"<users/{devOpsGoogleChatUserMap.GoogleChatUserId}>";
 
                 _logger.LogInformation(
-                    "BOARD: Missing description for \"{workItemId}:{workItemTitle}\". Assigned to {userEmail} in {currentIteration}.",
+                    "BOARD: Missing story point for \"{workItemId}:{workItemTitle}\". Assigned to {userEmail} in {currentIteration}.",
                     workItemId, workItemTitle, userEmail, _currentIteration.Name);
 
                 messages.Add(
-                    $"{chatDisplayName}, add a *description* to <{workItemUrl}|{workItemTitle}>.");
+                    $"{chatDisplayName}, *estimate* the story point of <{workItemUrl}|{workItemTitle}>.");
             }
 
             Sender.Tell(new ActorResponse<IReadOnlyList<string>>(messages, true));
