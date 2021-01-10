@@ -9,6 +9,8 @@
         <AssemblyName>TarikGuney.ManagerAutomation.FunctionApp</AssemblyName>
     </PropertyGroup>
     <ItemGroup>
+        <PackageReference Include="Akka" Version="1.4.14" />
+        <PackageReference Include="Akka.DI.AutoFac" Version="1.4.1" />
         <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.3" />
         <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     </ItemGroup>
