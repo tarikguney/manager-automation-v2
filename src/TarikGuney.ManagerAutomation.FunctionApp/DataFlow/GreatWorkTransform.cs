@@ -15,7 +15,7 @@ namespace TarikGuney.ManagerAutomation.DataFlow
             {
                 var workItemsByPersons = workItems
                     .Where(wi => wi["fields"] is JObject fields &&
-                                 new List<string>() {"Bug", "User Story"}.Contains(fields["System.WorkItemType"]
+                                 new List<string> {"Bug", "User Story"}.Contains(fields["System.WorkItemType"]
                                      .Value<string>()) &&
                                  fields.ContainsKey("System.AssignedTo") &&
                                  // Excluding the engineering manager from the congratulation list to prevent self-compliments.
