@@ -9,6 +9,14 @@ using TarikGuney.ManagerAutomation.SettingsModels;
 
 namespace TarikGuney.ManagerAutomation.Actors
 {
+	/// <summary>
+	/// During each sprint, this actor finds the engineers who have completed/closed
+	/// all of their work items. It then populates a congratulation messages.
+	/// This is not necessarily a good thing all the time for
+	/// the engineer might have been underutilized during the sprint. Hence, if this is a
+	/// repeating message for more than several days, the engineer is mostly likely underutilized
+	/// or their works are not captured with work items within the project tracking tool.
+	/// </summary>
 	public class CongratulatingEngineerActor : ReceiveActor
 	{
 		private readonly EngineeringManagerInfo _engineeringManagerInfo;
