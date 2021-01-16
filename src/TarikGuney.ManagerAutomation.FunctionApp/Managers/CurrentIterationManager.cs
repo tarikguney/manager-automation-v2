@@ -1,8 +1,8 @@
 using Akka.Actor;
 
-namespace TarikGuney.ManagerAutomation.Actors
+namespace TarikGuney.ManagerAutomation.Managers
 {
-	public class PreviousIterationManager: UntypedActor
+	public class CurrentIterationManager: UntypedActor
 	{
 		protected override void OnReceive(object message)
 		{
