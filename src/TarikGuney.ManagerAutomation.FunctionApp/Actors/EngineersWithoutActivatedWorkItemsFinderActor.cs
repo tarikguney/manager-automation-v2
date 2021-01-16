@@ -9,6 +9,10 @@ using TarikGuney.ManagerAutomation.SettingsModels;
 
 namespace TarikGuney.ManagerAutomation.Actors
 {
+	/// <summary>
+	/// During the current sprint/iteration, this actors finds the engineers who has not activated
+	/// any of their assigned work items.
+	/// </summary>
 	public class EngineersWithoutActivatedWorkItemsFinderActor : ReceiveActor
 	{
 		private readonly List<DevOpsChatUserMap> _devOpsChatUserMaps;
