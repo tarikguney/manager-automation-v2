@@ -10,6 +10,10 @@ using TarikGuney.ManagerAutomation.SettingsModels;
 
 namespace TarikGuney.ManagerAutomation.Actors
 {
+	/// <summary>
+	/// During the current sprint, this actor finds the work items that do not have any estimation
+	/// or story points.
+	/// </summary>
     public class WorkItemsWithoutEstimationFinderActor : ReceiveActor
     {
         private readonly ILogger _logger;
