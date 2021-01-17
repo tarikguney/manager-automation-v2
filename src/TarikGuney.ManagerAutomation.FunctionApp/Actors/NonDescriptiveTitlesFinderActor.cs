@@ -10,6 +10,10 @@ using TarikGuney.ManagerAutomation.SettingsModels;
 
 namespace TarikGuney.ManagerAutomation.Actors
 {
+	/// <summary>
+	/// During the current sprint, this actor finds any work items that do have titles consists of
+	/// two or fewer numbers of words, which usually is not enough to explain what the work item is about.
+	/// </summary>
     public class NonDescriptiveTitlesFinderActor : ReceiveActor
     {
         private readonly ILogger _logger;
