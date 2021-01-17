@@ -11,6 +11,11 @@ using TarikGuney.ManagerAutomation.SettingsModels;
 
 namespace TarikGuney.ManagerAutomation.Actors
 {
+	/// <summary>
+	/// During the sprint and on the first day of the sprint for the last sprint,
+	/// this actor finds the works items that are not closed/completed. Closed
+	/// is the items that have "Closed" as the state.
+	/// </summary>
 	public class PendingCodeCompleteFinderActor : ReceiveActor
 	{
 		private readonly ILogger _logger;
