@@ -22,15 +22,15 @@ namespace TarikGuney.ManagerAutomation
 			var iterationWorkItemsTransformBlock = IterationWorkItemsRetrieverTransform.Block;
 			var managersGoogleMessageSenderActionBlock = ManagersGoogleChatMessageSenderAction.Block;
 
-			var passedDueWorkItemsTransformBlock = PassedDueWorkItemsTransform.Block;
+			//var passedDueWorkItemsTransformBlock = PassedDueWorkItemsTransform.Block;
 
 			var broadcastBlock = new BroadcastBlock<List<JObject>>(null);
 			iterationWorkItemsTransformBlock.LinkTo(broadcastBlock);
 
 			var batchBlock = new BatchBlock<string>(1);
 
-			broadcastBlock.LinkTo(passedDueWorkItemsTransformBlock);
-			passedDueWorkItemsTransformBlock.LinkTo(batchBlock);
+			/*broadcastBlock.LinkTo(passedDueWorkItemsTransformBlock);
+			passedDueWorkItemsTransformBlock.LinkTo(batchBlock);*/
 
 			batchBlock.LinkTo(managersGoogleMessageSenderActionBlock);
 
