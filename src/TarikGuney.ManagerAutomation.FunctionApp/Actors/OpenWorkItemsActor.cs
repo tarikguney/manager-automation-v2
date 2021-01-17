@@ -89,7 +89,7 @@ namespace TarikGuney.ManagerAutomation.Actors
 					workItemId, workItemTitle, userEmail, _currentIteration.Name);
 
 				messages.Append(
-					$"{chatDisplayName}, <{workItemUrl}|{workItemTitle}> is in *{currentStatus}* state! {recommendedActionText}\n\n");
+					$"{chatDisplayName}, <{workItemUrl}|{workItemTitle}> is in *{currentStatus}* state! {recommendedActionText}");
 			}
 
 			Sender.Tell(new ActorResponse<IReadOnlyList<string>>(messages, true));

@@ -8,7 +8,7 @@ namespace TarikGuney.ManagerAutomation.DataFlow
     {
         public static ActionBlock<string[]> Block => new ActionBlock<string[]>(async messages =>
         {
-            var allCompleted = messages.All(m => string.IsNullOrEmpty(m) ||
+            /*var allCompleted = messages.All(m => string.IsNullOrEmpty(m) ||
                                                  m.ToLower().Contains(
                                                      GreatPreviousIteration.GreatWorkGreeting.ToLower()));
 
@@ -24,7 +24,7 @@ namespace TarikGuney.ManagerAutomation.DataFlow
                 text = $"Good morning team! 👋 Welcome to the {Config.CurrentIteration.Name}! 🎉 {actionMessage}\n\n" +
                        string.Join("", messages)
             };
-            await httpClient.PostAsJsonAsync(Config.GoogleChatSettings.WebhookUrl, chatMessage);
+            await httpClient.PostAsJsonAsync(Config.GoogleChatSettings.WebhookUrl, chatMessage);*/
         });
     }
 }
