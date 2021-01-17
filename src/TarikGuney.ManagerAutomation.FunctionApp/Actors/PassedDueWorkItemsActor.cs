@@ -11,6 +11,9 @@ using TarikGuney.ManagerAutomation.SettingsModels;
 
 namespace TarikGuney.ManagerAutomation.Actors
 {
+	/// <summary>
+	/// For the manager's report, this actor finds the work items that passed their due dates.
+	/// </summary>
 	public class PassedDueWorkItemsActor : ReceiveActor
 	{
 		private readonly ILogger _logger;
