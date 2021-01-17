@@ -29,12 +29,12 @@ namespace TarikGuney.ManagerAutomation
 			var iterationWorkItemsTransformBlock = IterationWorkItemsRetrieverTransform.Block;
 			var googleChatMessageSender = PreviousIterationGoogleChatMessageSenderAction.Block;
 
-			var estimateWorkItemsTransformBlock = EstimateWorkItemsTransform.Block;
+			/*var estimateWorkItemsTransformBlock = EstimateWorkItemsTransform.Block;
 			var descriptiveTitleTransformBlock = DescriptiveTitlesTransform.Block;
 			var descriptionTransformBlock = DescriptionTransform.Block;
 			var longCodeCompleteTransformBlock = LongCodeCompleteTransform.Block;
 			var greatPreviousIteration = GreatPreviousIteration.Block;
-			var openWorkItemsTransformBlock = OpenWorkItemsTransform.Block;
+			var openWorkItemsTransformBlock = OpenWorkItemsTransform.Block;*/
 
 			var broadcastBlock = new BroadcastBlock<List<JObject>>(null);
 			// Increase the limit of the batch size after adding another transform block.
@@ -42,7 +42,7 @@ namespace TarikGuney.ManagerAutomation
 
 			iterationWorkItemsTransformBlock.LinkTo(broadcastBlock);
 
-			broadcastBlock.LinkTo(estimateWorkItemsTransformBlock);
+			/*broadcastBlock.LinkTo(estimateWorkItemsTransformBlock);
 			estimateWorkItemsTransformBlock.LinkTo(batchBlock);
 
 			broadcastBlock.LinkTo(descriptiveTitleTransformBlock);
@@ -58,7 +58,7 @@ namespace TarikGuney.ManagerAutomation
 			greatPreviousIteration.LinkTo(batchBlock);
 
 			broadcastBlock.LinkTo(openWorkItemsTransformBlock);
-			openWorkItemsTransformBlock.LinkTo(batchBlock);
+			openWorkItemsTransformBlock.LinkTo(batchBlock);*/
 
 			batchBlock.LinkTo(googleChatMessageSender);
 

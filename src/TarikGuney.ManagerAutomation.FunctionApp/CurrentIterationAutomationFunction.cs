@@ -36,12 +36,12 @@ namespace TarikGuney.ManagerAutomation
             var lastDayMessageSenderActionBlock =
                 LastDayOfCurrentIterationGoogleChatMessageSenderAction.Block;
 
-            var estimateWorkItemsTransformBlock = EstimateWorkItemsTransform.Block;
+            /*var estimateWorkItemsTransformBlock = EstimateWorkItemsTransform.Block;
             var descriptiveTitleTransformBlock = DescriptiveTitlesTransform.Block;
             var activateWorkItemTransformBlock = ActivateWorkItemTransform.Block;
             var descriptionTransformBlock = DescriptionTransform.Block;
             var longCodeCompleteTransformBlock = LongCodeCompleteTransform.Block;
-            var greatWorkTransformBlock = GreatWorkTransform.Block;
+            var greatWorkTransformBlock = GreatWorkTransform.Block;*/
             var stillActiveWorkItemsTransformBlock = StillActiveWorkItemsTransform.Block;
 
             var broadcastBlock = new BroadcastBlock<List<JObject>>(null);
@@ -63,7 +63,7 @@ namespace TarikGuney.ManagerAutomation
 
             iterationWorkItemsTransformBlock.LinkTo(broadcastBlock);
 
-            broadcastBlock.LinkTo(estimateWorkItemsTransformBlock);
+            /*broadcastBlock.LinkTo(estimateWorkItemsTransformBlock);
             estimateWorkItemsTransformBlock.LinkTo(batchBlock);
 
             broadcastBlock.LinkTo(descriptiveTitleTransformBlock);
@@ -79,7 +79,7 @@ namespace TarikGuney.ManagerAutomation
             longCodeCompleteTransformBlock.LinkTo(batchBlock);
 
             broadcastBlock.LinkTo(greatWorkTransformBlock);
-            greatWorkTransformBlock.LinkTo(batchBlock);
+            greatWorkTransformBlock.LinkTo(batchBlock);*/
 
             iterationWorkItemsTransformBlock.Post(IterationTimeFrame.Current);
             iterationWorkItemsTransformBlock.Complete();
