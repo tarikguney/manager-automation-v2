@@ -41,8 +41,8 @@ namespace TarikGuney.ManagerAutomation
             var activateWorkItemTransformBlock = ActivateWorkItemTransform.Block;
             var descriptionTransformBlock = DescriptionTransform.Block;
             var longCodeCompleteTransformBlock = LongCodeCompleteTransform.Block;
-            var greatWorkTransformBlock = GreatWorkTransform.Block;*/
-            var stillActiveWorkItemsTransformBlock = StillActiveWorkItemsTransform.Block;
+            var greatWorkTransformBlock = GreatWorkTransform.Block;
+            var stillActiveWorkItemsTransformBlock = StillActiveWorkItemsTransform.Block;*/
 
             var broadcastBlock = new BroadcastBlock<List<JObject>>(null);
             // Increase the limit of the batch size after adding another transform block.
@@ -51,10 +51,10 @@ namespace TarikGuney.ManagerAutomation
             // On the last day of the iteration, send a different message indicating the end of the sprint.
             if (lastDayOfIteration)
             {
-                broadcastBlock.LinkTo(stillActiveWorkItemsTransformBlock);
+                /*broadcastBlock.LinkTo(stillActiveWorkItemsTransformBlock);
                 // Adding one more to the batch block, increasing the batch size by one.
                 stillActiveWorkItemsTransformBlock.LinkTo(batchBlock);
-                batchBlock.LinkTo(lastDayMessageSenderActionBlock);
+                batchBlock.LinkTo(lastDayMessageSenderActionBlock);*/
             }
             else
             {
