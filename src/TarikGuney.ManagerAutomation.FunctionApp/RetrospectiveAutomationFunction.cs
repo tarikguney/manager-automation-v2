@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
+using Akka.Actor;
+using Autofac;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
-using TarikGuney.ManagerAutomation.DataFlow;
+using TarikGuney.ManagerAutomation.AutoFacModules;
 using TarikGuney.ManagerAutomation.SettingsModels;
 
 namespace TarikGuney.ManagerAutomation
@@ -17,17 +20,26 @@ namespace TarikGuney.ManagerAutomation
 			ILogger log, ExecutionContext context)
 		{
 			// Sets the settings model defined as static properties in the class.
-			await Config.SetSharedSettings(context);
-			Logger.CurrentLogger = log;
+			var configModule = new ConfigurationModule(context);
+
+			var containerBuilder = new ContainerBuilder();
+			containerBuilder.RegisterModule(configModule);
+			containerBuilder.RegisterInstance(log).As<ILogger>();
+			var container = containerBuilder.Build();
+
+			var actorSystem = ActorSystem.Create("retrospective-automation-actor-system");
+			actorSystem.UseAutofac(container);
+
+			var currentIteration = container.Resolve<IOptions<CurrentIterationInfo>>();
 
 			// Running this function every Monday and only send reminders if it is the beginning of the sprint.
-			if (Config.CurrentIteration.StartDate.Date != DateTime.Now.Date)
+			if (currentIteration.Value.StartDate.Date != DateTime.Now.Date)
 			{
 				return;
 			}
 
-			var iterationWorkItemsTransformBlock = IterationWorkItemsRetrieverTransform.Block;
-			var googleChatMessageSender = PreviousIterationGoogleChatMessageSenderAction.Block;
+			/*var iterationWorkItemsTransformBlock = IterationWorkItemsRetrieverTransform.Block;*/
+			/*var googleChatMessageSender = PreviousIterationGoogleChatMessageSenderAction.Block;*/
 
 			/*var estimateWorkItemsTransformBlock = EstimateWorkItemsTransform.Block;
 			var descriptiveTitleTransformBlock = DescriptiveTitlesTransform.Block;
@@ -40,7 +52,7 @@ namespace TarikGuney.ManagerAutomation
 			// Increase the limit of the batch size after adding another transform block.
 			var batchBlock = new BatchBlock<string>(6);
 
-			iterationWorkItemsTransformBlock.LinkTo(broadcastBlock);
+			/*iterationWorkItemsTransformBlock.LinkTo(broadcastBlock);*/
 
 			/*broadcastBlock.LinkTo(estimateWorkItemsTransformBlock);
 			estimateWorkItemsTransformBlock.LinkTo(batchBlock);
@@ -60,11 +72,11 @@ namespace TarikGuney.ManagerAutomation
 			broadcastBlock.LinkTo(openWorkItemsTransformBlock);
 			openWorkItemsTransformBlock.LinkTo(batchBlock);*/
 
-			batchBlock.LinkTo(googleChatMessageSender);
+			/*batchBlock.LinkTo(googleChatMessageSender);
 
 			iterationWorkItemsTransformBlock.Post(IterationTimeFrame.Previous);
 			iterationWorkItemsTransformBlock.Complete();
-			await googleChatMessageSender.Completion;
+			await googleChatMessageSender.Completion;*/
 		}
 	}
 }

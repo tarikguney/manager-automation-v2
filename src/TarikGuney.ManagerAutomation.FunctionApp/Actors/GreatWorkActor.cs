@@ -22,12 +22,12 @@ namespace TarikGuney.ManagerAutomation.Actors
 		private readonly EngineeringManagerInfo _engineeringManagerInfo;
 		private readonly ILogger _logger;
 		private readonly List<DevOpsChatUserMap> _devOpsChatUserMaps;
-		private readonly IterationInfo _currentIteration;
+		private readonly CurrentIterationInfo _currentIteration;
 
 		public CongratulatingEngineerActor(
 			IOptions<List<DevOpsChatUserMap>> devOpsChatUserMapsOptions,
 			IOptions<EngineeringManagerInfo> engineeringManagerInfoOptions,
-			IOptions<IterationInfo> currentIterationOptions, ILogger logger)
+			IOptions<CurrentIterationInfo> currentIterationOptions, ILogger logger)
 		{
 			_engineeringManagerInfo = engineeringManagerInfoOptions.Value;
 			_logger = logger;

@@ -19,10 +19,10 @@ namespace TarikGuney.ManagerAutomation.Actors
         private readonly ILogger _logger;
         private readonly AzureDevOpsSettings _azureDevOpsSettings;
         private readonly List<DevOpsChatUserMap> _devOpsChatUserMaps;
-        private readonly IterationInfo _currentIteration;
+        private readonly CurrentIterationInfo _currentIteration;
 
         public NonDescriptiveTitlesFinderActor(ILogger logger, IOptions<AzureDevOpsSettings> azureDevOpsSettingsOptions,
-            IOptions<List<DevOpsChatUserMap>> devOpsChatUserMapOptions, IOptions<IterationInfo> currentIterationOptions)
+            IOptions<List<DevOpsChatUserMap>> devOpsChatUserMapOptions, IOptions<CurrentIterationInfo> currentIterationOptions)
         {
             _logger = logger;
             _azureDevOpsSettings = azureDevOpsSettingsOptions.Value;

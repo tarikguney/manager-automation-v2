@@ -16,11 +16,11 @@ namespace TarikGuney.ManagerAutomation.Actors
 	public class EngineersWithoutActivatedWorkItemsFinderActor : ReceiveActor
 	{
 		private readonly List<DevOpsChatUserMap> _devOpsChatUserMaps;
-		private readonly IterationInfo _currentIteration;
+		private readonly CurrentIterationInfo _currentIteration;
 		private readonly ILogger _logger;
 
 		public EngineersWithoutActivatedWorkItemsFinderActor(IOptions<List<DevOpsChatUserMap>> devOpsChatUserMapsOptions,
-			IOptions<IterationInfo> currentIterationOptions, ILogger logger)
+			IOptions<CurrentIterationInfo> currentIterationOptions, ILogger logger)
 		{
 			_devOpsChatUserMaps = devOpsChatUserMapsOptions.Value;
 			_logger = logger;

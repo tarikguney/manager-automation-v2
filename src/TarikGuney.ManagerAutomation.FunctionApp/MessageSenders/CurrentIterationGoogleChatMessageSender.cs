@@ -1,13 +1,22 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks.Dataflow;
+using Microsoft.Extensions.Options;
+using TarikGuney.ManagerAutomation.SettingsModels;
 
-namespace TarikGuney.ManagerAutomation.DataFlow
+namespace TarikGuney.ManagerAutomation.MessageSenders
 {
-	public static class CurrentIterationGoogleChatMessageSenderAction
+	public class CurrentIterationGoogleChatMessageSender : ICurrentIterationMessageSender
 	{
-		public static ActionBlock<string[]> Block => new ActionBlock<string[]>(async messages =>
+		private readonly IOptions<GoogleChatSettings> _googleChatSettingsOptions;
+
+		public CurrentIterationGoogleChatMessageSender(IOptions<GoogleChatSettings> googleChatSettingsOptions)
+		{
+			_googleChatSettingsOptions = googleChatSettingsOptions;
+		}
+
+		public void SendMessages(IReadOnlyList<string> messages)
 		{
 			var allCompleted = messages.All(string.IsNullOrWhiteSpace);
 
@@ -41,7 +50,7 @@ namespace TarikGuney.ManagerAutomation.DataFlow
 				};
 			}
 
-			await httpClient.PostAsJsonAsync(Config.GoogleChatSettings.WebhookUrl, chatMessage);
-		});
+			httpClient.PostAsJsonAsync(_googleChatSettingsOptions.Value.WebhookUrl, chatMessage);
+		}
 	}
 }

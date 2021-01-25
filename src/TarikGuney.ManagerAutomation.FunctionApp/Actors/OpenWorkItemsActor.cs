@@ -19,11 +19,11 @@ namespace TarikGuney.ManagerAutomation.Actors
 		private readonly ILogger _logger;
 		private readonly AzureDevOpsSettings _azureDevOpsSettings;
 		private readonly List<DevOpsChatUserMap> _devOpsChatUserMaps;
-		private readonly IterationInfo _currentIteration;
+		private readonly CurrentIterationInfo _currentIteration;
 
 		public StillOpenWorkItemsFinderActor(IOptions<AzureDevOpsSettings> azureDevOpsSettingsOptions,
 			IOptions<List<DevOpsChatUserMap>> devOpsChatUserMapsOptions,
-			IOptions<IterationInfo> currentIterationOptions, ILogger logger)
+			IOptions<CurrentIterationInfo> currentIterationOptions, ILogger logger)
 		{
 			_logger = logger;
 			_azureDevOpsSettings = azureDevOpsSettingsOptions.Value;
@@ -84,7 +84,7 @@ namespace TarikGuney.ManagerAutomation.Actors
 					? userDisplayName
 					: $"<users/{devOpsGoogleChatUserMap.GoogleChatUserId}>";
 
-				Logger.CurrentLogger.LogInformation(
+				_logger.LogInformation(
 					"BOARD: Still open in {currentState} state. Story \"{workItemId}:{workItemTitle}\". Assigned to {userEmail} in {currentIteration}.",
 					workItemId, workItemTitle, userEmail, _currentIteration.Name);
 
