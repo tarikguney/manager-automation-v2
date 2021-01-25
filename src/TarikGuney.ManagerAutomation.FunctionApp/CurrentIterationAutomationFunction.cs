@@ -23,15 +23,15 @@ namespace TarikGuney.ManagerAutomation
             // Sets the settings model defined as static properties in the class.
             // No need to send anything on the first day of the sprint since it is the planning day,
             // and people most likely won't have much time to keep their work items current.
+            var configModule = new ConfigurationModule(context);
+            var currentIterationModule = new CurrentIterationModule();
 
             var builder = new ContainerBuilder();
-
-            var configModule = new ConfigurationModule(context);
             builder.RegisterModule(configModule);
-
+            builder.RegisterModule(currentIterationModule);
             builder.RegisterInstance(log).As<ILogger>();
-
             var container = builder.Build();
+
             var currentIteration = container.Resolve<IOptions<CurrentIterationInfo>>();
 
             if (currentIteration.Value.StartDate.Date == DateTime.Now.Date)
