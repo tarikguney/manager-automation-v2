@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TarikGuney.ManagerAutomation.FunctionApp", "TarikGuney.ManagerAutomation.FunctionApp\TarikGuney.ManagerAutomation.FunctionApp.csproj", "{3F23FD09-A46F-406E-82D9-4A2D82876389}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TarikGuney.ManagerAutomation.UnitTests", "TarikGuney.ManagerAutomation.UnitTests\TarikGuney.ManagerAutomation.UnitTests.csproj", "{6BA838E4-22E7-4106-AC4C-A97A0515585D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{3F23FD09-A46F-406E-82D9-4A2D82876389}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F23FD09-A46F-406E-82D9-4A2D82876389}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F23FD09-A46F-406E-82D9-4A2D82876389}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BA838E4-22E7-4106-AC4C-A97A0515585D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BA838E4-22E7-4106-AC4C-A97A0515585D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BA838E4-22E7-4106-AC4C-A97A0515585D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BA838E4-22E7-4106-AC4C-A97A0515585D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
