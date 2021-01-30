@@ -19,11 +19,10 @@ namespace TarikGuney.ManagerAutomation
 		{
 			// Sets the settings model defined as static properties in the class.
 			var configModule = new ConfigurationModule(context);
-			var managersReportModule = new ManagersReportModule();
 
 			var containerBuilder = new ContainerBuilder();
 			containerBuilder.RegisterModule(configModule);
-			containerBuilder.RegisterModule(managersReportModule);
+			containerBuilder.RegisterModule<ManagersReportModule>();
 			containerBuilder.RegisterInstance(log).As<ILogger>();
 			var container = containerBuilder.Build();
 

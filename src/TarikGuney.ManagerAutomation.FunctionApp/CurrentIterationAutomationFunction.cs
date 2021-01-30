@@ -24,11 +24,10 @@ namespace TarikGuney.ManagerAutomation
             // No need to send anything on the first day of the sprint since it is the planning day,
             // and people most likely won't have much time to keep their work items current.
             var configModule = new ConfigurationModule(context);
-            var currentIterationModule = new CurrentIterationModule();
 
             var builder = new ContainerBuilder();
             builder.RegisterModule(configModule);
-            builder.RegisterModule(currentIterationModule);
+            builder.RegisterModule<CurrentIterationModule>();
             builder.RegisterInstance(log).As<ILogger>();
             var container = builder.Build();
 

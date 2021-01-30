@@ -1,5 +1,7 @@
-using System;
 using Autofac;
+using TarikGuney.ManagerAutomation.Actors;
+using TarikGuney.ManagerAutomation.IterationWorkItemRetrievers;
+using TarikGuney.ManagerAutomation.MessageSenders;
 
 namespace TarikGuney.ManagerAutomation.AutoFacModules
 {
@@ -7,7 +9,11 @@ namespace TarikGuney.ManagerAutomation.AutoFacModules
 	{
 		protected override void Load(ContainerBuilder builder)
 		{
-			throw new NotImplementedException();
+			builder.RegisterType<IIterationWorkItemsRetriever>()
+				.As<AzureDevOpsIterationWorkItemsRetriever>().SingleInstance();
+			builder.RegisterType<IManagersReportMessageSender>()
+				.As<ManagersReportGoogleChatMessageSender>().SingleInstance();
+			builder.RegisterType<PassedDueWorkItemsActor>().AsSelf();
 		}
 	}
 }
