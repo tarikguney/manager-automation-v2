@@ -14,14 +14,14 @@ namespace TarikGuney.ManagerAutomation.Actors
 	/// During the current sprint, this actor finds the work items that do not have any estimation
 	/// or story points.
 	/// </summary>
-    public class WorkItemsWithoutEstimationFinderActor : ReceiveActor
+    public class EstimateWorkItemsActor : ReceiveActor
     {
         private readonly ILogger _logger;
         private readonly AzureDevOpsSettings _azureDevOpsSettings;
         private readonly List<DevOpsChatUserMap> _devOpsChatUserMaps;
         private readonly CurrentIterationInfo _currentIteration;
 
-        public WorkItemsWithoutEstimationFinderActor(ILogger logger,
+        public EstimateWorkItemsActor(ILogger logger,
             IOptions<AzureDevOpsSettings> azureDevOpsSettingsOptions,
             IOptions<List<DevOpsChatUserMap>> devOpsChatUserMapOptions, IOptions<CurrentIterationInfo> currentIterationOptions)
         {

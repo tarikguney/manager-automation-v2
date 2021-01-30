@@ -17,14 +17,14 @@ namespace TarikGuney.ManagerAutomation.Actors
 	/// repeating message for more than several days, the engineer is mostly likely underutilized
 	/// or their works are not captured with work items within the project tracking tool.
 	/// </summary>
-	public class CongratulatingEngineerActor : ReceiveActor
+	public class GreatWorkActor : ReceiveActor
 	{
 		private readonly EngineeringManagerInfo _engineeringManagerInfo;
 		private readonly ILogger _logger;
 		private readonly List<DevOpsChatUserMap> _devOpsChatUserMaps;
 		private readonly CurrentIterationInfo _currentIteration;
 
-		public CongratulatingEngineerActor(
+		public GreatWorkActor(
 			IOptions<List<DevOpsChatUserMap>> devOpsChatUserMapsOptions,
 			IOptions<EngineeringManagerInfo> engineeringManagerInfoOptions,
 			IOptions<CurrentIterationInfo> currentIterationOptions, ILogger logger)

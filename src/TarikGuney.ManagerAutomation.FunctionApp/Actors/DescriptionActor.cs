@@ -14,14 +14,14 @@ namespace TarikGuney.ManagerAutomation.Actors
 	/// During the current sprint, this actor finds the work items without any
 	/// description.
 	/// </summary>
-    public class MissingDescriptionFinderActor : ReceiveActor
+    public class DescriptionActor : ReceiveActor
     {
         private readonly ILogger _logger;
         private readonly AzureDevOpsSettings _azureDevOpsSettings;
         private readonly List<DevOpsChatUserMap> _devOpsChatUserMaps;
         private readonly CurrentIterationInfo _currentIteration;
 
-        public MissingDescriptionFinderActor(IOptions<AzureDevOpsSettings> azureDevOpsSettingsOptions,
+        public DescriptionActor(IOptions<AzureDevOpsSettings> azureDevOpsSettingsOptions,
             IOptions<List<DevOpsChatUserMap>> devOpsChatUserMapsOptions,
             IOptions<CurrentIterationInfo> currentIterationOptions, ILogger logger)
         {

@@ -16,14 +16,14 @@ namespace TarikGuney.ManagerAutomation.Actors
 	/// this actor finds the works items that are not closed/completed. Closed
 	/// is the items that have "Closed" as the state.
 	/// </summary>
-	public class PendingCodeCompleteFinderActor : ReceiveActor
+	public class LongCodeCompleteActor : ReceiveActor
 	{
 		private readonly ILogger _logger;
 		private readonly AzureDevOpsSettings _azureDevOpsSettings;
 		private readonly List<DevOpsChatUserMap> _devOpsChatUserMaps;
 		private readonly CurrentIterationInfo _currentIteration;
 
-		public PendingCodeCompleteFinderActor(IOptions<AzureDevOpsSettings> azureDevOpsSettingsOptions,
+		public LongCodeCompleteActor(IOptions<AzureDevOpsSettings> azureDevOpsSettingsOptions,
 			IOptions<List<DevOpsChatUserMap>> devOpsChatUserMapsOptions,
 			IOptions<CurrentIterationInfo> currentIterationOptions, ILogger logger)
 		{

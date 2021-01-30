@@ -14,14 +14,14 @@ namespace TarikGuney.ManagerAutomation.Actors
 	/// During the current sprint, this actor finds any work items that do have titles consists of
 	/// two or fewer numbers of words, which usually is not enough to explain what the work item is about.
 	/// </summary>
-    public class NonDescriptiveTitlesFinderActor : ReceiveActor
+    public class DescriptiveTitleActor : ReceiveActor
     {
         private readonly ILogger _logger;
         private readonly AzureDevOpsSettings _azureDevOpsSettings;
         private readonly List<DevOpsChatUserMap> _devOpsChatUserMaps;
         private readonly CurrentIterationInfo _currentIteration;
 
-        public NonDescriptiveTitlesFinderActor(ILogger logger, IOptions<AzureDevOpsSettings> azureDevOpsSettingsOptions,
+        public DescriptiveTitleActor(ILogger logger, IOptions<AzureDevOpsSettings> azureDevOpsSettingsOptions,
             IOptions<List<DevOpsChatUserMap>> devOpsChatUserMapOptions, IOptions<CurrentIterationInfo> currentIterationOptions)
         {
             _logger = logger;

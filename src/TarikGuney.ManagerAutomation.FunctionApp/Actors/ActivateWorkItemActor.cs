@@ -13,13 +13,13 @@ namespace TarikGuney.ManagerAutomation.Actors
 	/// During the current sprint/iteration, this actors finds the engineers who has not activated
 	/// any of their assigned work items.
 	/// </summary>
-	public class EngineersWithoutActivatedWorkItemsFinderActor : ReceiveActor
+	public class ActivateWorkItemActor : ReceiveActor
 	{
 		private readonly List<DevOpsChatUserMap> _devOpsChatUserMaps;
 		private readonly CurrentIterationInfo _currentIteration;
 		private readonly ILogger _logger;
 
-		public EngineersWithoutActivatedWorkItemsFinderActor(IOptions<List<DevOpsChatUserMap>> devOpsChatUserMapsOptions,
+		public ActivateWorkItemActor(IOptions<List<DevOpsChatUserMap>> devOpsChatUserMapsOptions,
 			IOptions<CurrentIterationInfo> currentIterationOptions, ILogger logger)
 		{
 			_devOpsChatUserMaps = devOpsChatUserMapsOptions.Value;

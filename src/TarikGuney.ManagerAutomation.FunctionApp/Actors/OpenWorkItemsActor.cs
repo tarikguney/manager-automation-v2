@@ -14,14 +14,14 @@ namespace TarikGuney.ManagerAutomation.Actors
 	/// On the first of a new sprint, this actor finds the open work items from the last sprint
 	/// and offers suggestions to the owner of the work item on how it should be dealt with.
 	/// </summary>
-	public class StillOpenWorkItemsFinderActor : ReceiveActor
+	public class OpenWorkItemsActor : ReceiveActor
 	{
 		private readonly ILogger _logger;
 		private readonly AzureDevOpsSettings _azureDevOpsSettings;
 		private readonly List<DevOpsChatUserMap> _devOpsChatUserMaps;
 		private readonly CurrentIterationInfo _currentIteration;
 
-		public StillOpenWorkItemsFinderActor(IOptions<AzureDevOpsSettings> azureDevOpsSettingsOptions,
+		public OpenWorkItemsActor(IOptions<AzureDevOpsSettings> azureDevOpsSettingsOptions,
 			IOptions<List<DevOpsChatUserMap>> devOpsChatUserMapsOptions,
 			IOptions<CurrentIterationInfo> currentIterationOptions, ILogger logger)
 		{
