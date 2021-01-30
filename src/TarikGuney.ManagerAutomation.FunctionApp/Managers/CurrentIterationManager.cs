@@ -4,6 +4,7 @@ using Akka.Actor;
 using Akka.DI.Core;
 using Microsoft.Extensions.Options;
 using TarikGuney.ManagerAutomation.Actors;
+using TarikGuney.ManagerAutomation.CommMessages;
 using TarikGuney.ManagerAutomation.IterationWorkItemRetrievers;
 using TarikGuney.ManagerAutomation.MessageSenders;
 using TarikGuney.ManagerAutomation.SettingsModels;
@@ -12,6 +13,7 @@ namespace TarikGuney.ManagerAutomation.Managers
 {
 	public class CurrentIterationManager : ReceiveActor
 	{
+		private int _expectedNumberOfResponses;
 		private readonly ICurrentIterationMessageSender _currentIterationMessageSender;
 		private readonly IIterationWorkItemsRetriever _workItemsRetriever;
 		private readonly ILastDayOfCurrentIterationMessageSender _lastDayOfCurrentIterationMessageSender;
@@ -56,6 +58,8 @@ namespace TarikGuney.ManagerAutomation.Managers
 				return;
 			}
 
+			var lastDayOfSprint = _currentIterationInfoOptions.Value.FinishDate.Date == DateTime.Now.Date;
+
 			var currentIterationWorkItems = _workItemsRetriever.GetWorkItems(IterationTimeFrame.Current);
 
 			var estimateWorkItemActor =
@@ -65,27 +69,33 @@ namespace TarikGuney.ManagerAutomation.Managers
 			var activateWorkItemActor =
 				Context.ActorOf(Context.DI().Props<ActivateWorkItemActor>(), "activate-work-item-actor");
 			var descriptionActor = Context.ActorOf(Context.DI().Props<DescriptionActor>(), "description-actor");
-			var longCodeComplete = Context.ActorOf(Context.DI().Props<LongCodeCompleteActor>(), "long-code-complete-actor");
+			var longCodeCompleteActor =
+				Context.ActorOf(Context.DI().Props<LongCodeCompleteActor>(), "long-code-complete-actor");
 			var greatWorkActor = Context.ActorOf(Context.DI().Props<GreatWorkActor>(), "great-work-actor");
+
 
 			var stillActiveWorkItemsActor = Context.ActorOf(Context.DI().Props<StillActiveWorkItemsActor>(),
 				"still-active-work-items-actor");
 
-			estimateWorkItemActor.Tell(currentIterationWorkItems);
-			descriptiveTitleActor.Tell(currentIterationWorkItems);
-			activateWorkItemActor.Tell(currentIterationWorkItems);
-			descriptionActor.Tell(currentIterationWorkItems);
-			longCodeComplete.Tell(currentIterationWorkItems);
-			greatWorkActor.Tell(currentIterationWorkItems);
+			var estimateWorkItemTask = estimateWorkItemActor
+				.Ask<ActorResponse<IReadOnlyList<string>>>(currentIterationWorkItems);
+			var descriptiveTitleTask = descriptiveTitleActor
+				.Ask<ActorResponse<IReadOnlyList<string>>>(currentIterationWorkItems);
+			var activeWorkItemTask = activateWorkItemActor
+				.Ask<ActorResponse<IReadOnlyList<string>>>(currentIterationWorkItems);
+			var descriptionTask = descriptionActor
+				.Ask<ActorResponse<IReadOnlyList<string>>>(currentIterationWorkItems);
+			var longCodeCompleteTask = longCodeCompleteActor
+				.Ask<ActorResponse<IReadOnlyList<string>>>(currentIterationWorkItems);
+			var greatWorkTask = greatWorkActor
+				.Ask<ActorResponse<IReadOnlyList<string>>>(currentIterationWorkItems);
 
-			if (_currentIterationInfoOptions.Value.FinishDate.Date == DateTime.Now.Date)
+			if (lastDayOfSprint)
 			{
-				stillActiveWorkItemsActor.Tell(currentIterationWorkItems);
+				var stillActiveWorkItemsTask = stillActiveWorkItemsActor.Ask<ActorResponse<IReadOnlyList<string>>>(currentIterationWorkItems)
 			}
-		}
-	}
 
-	public class StartAnalysisRequest
-	{
+
+		}
 	}
 }
