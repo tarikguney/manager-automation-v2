@@ -115,6 +115,8 @@ namespace TarikGuney.ManagerAutomation.Managers
 			{
 				_lastDayOfCurrentIterationMessageSender.SendMessages(messages);
 			}
+
+			Context.Stop(Self);
 		}
 	}
 }
