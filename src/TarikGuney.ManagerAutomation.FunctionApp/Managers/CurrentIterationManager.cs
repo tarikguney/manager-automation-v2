@@ -36,16 +36,18 @@ namespace TarikGuney.ManagerAutomation.Managers
 
 		private void StartAnalysis(StartAnalysisRequest request)
 		{
-			if (_currentIterationInfoOptions.Value.StartDate.Date == DateTime.Now.Date)
+			var firstDayOfSprint = _currentIterationInfoOptions.Value.StartDate.Date == DateTime.Now.Date;
+			
+			if (firstDayOfSprint)
 			{
 				Context.Stop(Self);
-				return;
+				Sender.Tell(new AnalysisCompleteResponse());
 			}
 
 			var lastDayOfSprint = _currentIterationInfoOptions.Value.FinishDate.Date == DateTime.Now.Date;
-
 			var currentIterationWorkItems = _workItemsRetriever.GetWorkItems(IterationTimeFrame.Current);
 
+			// Creating the subordinate actors.
 			var estimateWorkItemActor =
 				Context.ActorOf(Context.DI().Props<EstimateWorkItemsActor>(), "estimate-work-item-actor");
 			var descriptiveTitleActor =
@@ -62,6 +64,7 @@ namespace TarikGuney.ManagerAutomation.Managers
 				Context.ActorOf(Context.DI().Props<StillActiveWorkItemsActor>(),
 				"still-active-work-items-actor");
 
+			// Running the actors.
 			var tasks = new List<Task>();
 
 			var estimateWorkItemTask = estimateWorkItemActor
@@ -97,8 +100,10 @@ namespace TarikGuney.ManagerAutomation.Managers
 
 			tasks.Add(stillActiveWorkItemsTask);
 
+			// Waiting for all the of the actors to finish their work and return a response back.
 			Task.WaitAll(tasks.ToArray());
 
+			// Collecting the results from each actor.
 			var messages = new List<string>();
 			messages.AddRange(estimateWorkItemTask.Result.Content);
 			messages.AddRange(descriptiveTitleTask.Result.Content);
@@ -107,6 +112,8 @@ namespace TarikGuney.ManagerAutomation.Managers
 			messages.AddRange(stillActiveWorkItemsTask.Result.Content);
 			messages.AddRange(longCodeCompleteTask.Result.Content);
 
+			// Sending the messages from each actor to the message senders. Using a different message sender if it 
+			// is the last day of the sprint.
 			if (lastDayOfSprint)
 			{
 				_currentIterationMessageSender.SendMessages(messages);
@@ -117,6 +124,8 @@ namespace TarikGuney.ManagerAutomation.Managers
 			}
 
 			Context.Stop(Self);
+			// This is required for stopping the program. Check out the Ask<> calls in the function classes.
+			Sender.Tell(new AnalysisCompleteResponse());
 		}
 	}
 }
