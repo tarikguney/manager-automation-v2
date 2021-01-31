@@ -6,6 +6,7 @@ using Akka.Actor;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
+using TarikGuney.ManagerAutomation.CommMessages;
 using TarikGuney.ManagerAutomation.Helpers;
 using TarikGuney.ManagerAutomation.SettingsModels;
 
@@ -53,7 +54,7 @@ namespace TarikGuney.ManagerAutomation.Actors
 
 			if (!offendingWorkItems.Any())
 			{
-				Sender.Tell(new ActorResponse<IReadOnlyList<string>>(null, false));
+				Sender.Tell(new ActorResponse<IReadOnlyList<string>>(new List<string>(), false));
 			}
 
 			var messages = new List<string>();

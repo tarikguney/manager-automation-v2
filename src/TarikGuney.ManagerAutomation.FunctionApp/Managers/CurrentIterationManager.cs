@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Akka.Actor;
 using Akka.DI.Core;
 using Microsoft.Extensions.Options;
@@ -31,23 +32,6 @@ namespace TarikGuney.ManagerAutomation.Managers
 			_currentIterationInfoOptions = currentIterationInfoOptions;
 
 			Receive<StartAnalysisRequest>(StartAnalysis);
-			Receive<ActorResponse<IReadOnlyList<string>>>(HandleSubordinatesResponses);
-		}
-
-		private void HandleSubordinatesResponses(ActorResponse<IReadOnlyList<string>> response)
-		{
-			/* todo Handle the subordinate response
-				1. Count the number of responses received
-				2. Check if today's is the lsat day of the sprint, then count the number differently
-				3. If everything is received, then
-					a. Either form another message and send it to self.
-					b. Start sending the messages here directly
-				4. Choose the last day or regular days message sender
-				5. Push the messages to the message sender.
-				6. Stop self, which will terminate the child actors too.
-				Question: Will the actors run to the completion or do I need to wait for the response
-					in the program.cs file?
-			 */
 		}
 
 		private void StartAnalysis(StartAnalysisRequest request)
@@ -68,34 +52,69 @@ namespace TarikGuney.ManagerAutomation.Managers
 				Context.ActorOf(Context.DI().Props<DescriptiveTitleActor>(), "descriptive-title-actor");
 			var activateWorkItemActor =
 				Context.ActorOf(Context.DI().Props<ActivateWorkItemActor>(), "activate-work-item-actor");
-			var descriptionActor = Context.ActorOf(Context.DI().Props<DescriptionActor>(), "description-actor");
+			var descriptionActor =
+				Context.ActorOf(Context.DI().Props<DescriptionActor>(), "description-actor");
 			var longCodeCompleteActor =
 				Context.ActorOf(Context.DI().Props<LongCodeCompleteActor>(), "long-code-complete-actor");
-			var greatWorkActor = Context.ActorOf(Context.DI().Props<GreatWorkActor>(), "great-work-actor");
-
-
-			var stillActiveWorkItemsActor = Context.ActorOf(Context.DI().Props<StillActiveWorkItemsActor>(),
+			var greatWorkActor =
+				Context.ActorOf(Context.DI().Props<GreatWorkActor>(), "great-work-actor");
+			var stillActiveWorkItemsActor =
+				Context.ActorOf(Context.DI().Props<StillActiveWorkItemsActor>(),
 				"still-active-work-items-actor");
+
+			var tasks = new List<Task>();
 
 			var estimateWorkItemTask = estimateWorkItemActor
 				.Ask<ActorResponse<IReadOnlyList<string>>>(currentIterationWorkItems);
+			tasks.Add(estimateWorkItemTask);
+
 			var descriptiveTitleTask = descriptiveTitleActor
 				.Ask<ActorResponse<IReadOnlyList<string>>>(currentIterationWorkItems);
+			tasks.Add(descriptiveTitleTask);
+
 			var activeWorkItemTask = activateWorkItemActor
 				.Ask<ActorResponse<IReadOnlyList<string>>>(currentIterationWorkItems);
+			tasks.Add(activeWorkItemTask);
+
 			var descriptionTask = descriptionActor
 				.Ask<ActorResponse<IReadOnlyList<string>>>(currentIterationWorkItems);
+			tasks.Add(descriptionTask);
+
 			var longCodeCompleteTask = longCodeCompleteActor
 				.Ask<ActorResponse<IReadOnlyList<string>>>(currentIterationWorkItems);
+			tasks.Add(longCodeCompleteTask);
+
 			var greatWorkTask = greatWorkActor
 				.Ask<ActorResponse<IReadOnlyList<string>>>(currentIterationWorkItems);
+			tasks.Add(greatWorkTask);
+
+
+			var stillActiveWorkItemsTask = lastDayOfSprint
+				? stillActiveWorkItemsActor.Ask<ActorResponse<IReadOnlyList<string>>>(currentIterationWorkItems)
+				: new Task<ActorResponse<IReadOnlyList<string>>>(
+					() =>
+						new ActorResponse<IReadOnlyList<string>>(null, false));
+
+			tasks.Add(stillActiveWorkItemsTask);
+
+			Task.WaitAll(tasks.ToArray());
+
+			var messages = new List<string>();
+			messages.AddRange(estimateWorkItemTask.Result.Content);
+			messages.AddRange(descriptiveTitleTask.Result.Content);
+			messages.AddRange(greatWorkTask.Result.Content);
+			messages.AddRange(activeWorkItemTask.Result.Content);
+			messages.AddRange(stillActiveWorkItemsTask.Result.Content);
+			messages.AddRange(longCodeCompleteTask.Result.Content);
 
 			if (lastDayOfSprint)
 			{
-				var stillActiveWorkItemsTask = stillActiveWorkItemsActor.Ask<ActorResponse<IReadOnlyList<string>>>(currentIterationWorkItems)
+				_currentIterationMessageSender.SendMessages(messages);
 			}
-
-
+			else
+			{
+				_lastDayOfCurrentIterationMessageSender.SendMessages(messages);
+			}
 		}
 	}
 }

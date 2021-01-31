@@ -1,4 +1,4 @@
-namespace TarikGuney.ManagerAutomation.Actors
+namespace TarikGuney.ManagerAutomation.CommMessages
 {
 	/// <summary>
 	/// Encapsulates an immutable response from an actor. It provides an extensibility point for
