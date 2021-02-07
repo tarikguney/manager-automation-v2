@@ -35,7 +35,7 @@ namespace TarikGuney.ManagerAutomation.Managers
 
 			var result = passedDueWorkItemsTask.Result;
 
-			_managersReportMessageSender.SendMessages(result.Content);
+			_managersReportMessageSender.SendMessages(result.Content).Wait();
 
 			Context.Stop(Self);
 			Sender.Tell(new AnalysisCompleteResponse());

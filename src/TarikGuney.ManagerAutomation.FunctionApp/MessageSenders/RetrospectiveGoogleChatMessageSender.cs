@@ -1,25 +1,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using TarikGuney.ManagerAutomation.Actors;
 using TarikGuney.ManagerAutomation.SettingsModels;
 
 namespace TarikGuney.ManagerAutomation.MessageSenders
 {
-	public class RestrospectiveGoogleChatMessageSender : IRetrospectiveMessageSender
+	public class RetrospectiveGoogleChatMessageSender : IRetrospectiveMessageSender
 	{
 		private readonly IOptions<CurrentIterationInfo> _currentIterationOptions;
 		private readonly IOptions<GoogleChatSettings> _googleChatSettingsOptions;
 
-		public RestrospectiveGoogleChatMessageSender(IOptions<CurrentIterationInfo> _currentIterationOptions,
+		public RetrospectiveGoogleChatMessageSender(IOptions<CurrentIterationInfo> _currentIterationOptions,
 			IOptions<GoogleChatSettings> _googleChatSettingsOptions)
 		{
 			this._currentIterationOptions = _currentIterationOptions;
 			this._googleChatSettingsOptions = _googleChatSettingsOptions;
 		}
 
-		public void SendMessages(IReadOnlyList<string> messages)
+		public async Task SendMessages(IReadOnlyList<string> messages)
 		{
 			var allCompleted = messages.All(m => string.IsNullOrEmpty(m) ||
 			                                     m.ToLower().Contains(
@@ -38,7 +39,7 @@ namespace TarikGuney.ManagerAutomation.MessageSenders
 				       string.Join("", messages)
 			};
 
-			httpClient.PostAsJsonAsync(_googleChatSettingsOptions.Value.WebhookUrl, chatMessage).Wait();
+			await httpClient.PostAsJsonAsync(_googleChatSettingsOptions.Value.WebhookUrl, chatMessage);
 		}
 	}
 }

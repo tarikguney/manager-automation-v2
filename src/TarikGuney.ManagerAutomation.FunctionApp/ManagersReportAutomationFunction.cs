@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using Akka.Actor;
 using Akka.DI.Core;
 using Autofac;
@@ -14,7 +13,7 @@ namespace TarikGuney.ManagerAutomation
 	public static class ManagersReportAutomationFunction
 	{
 		[FunctionName("ManagersReportAutomation")]
-		public static async Task RunAsync([TimerTrigger("0 30 9 * * 1-5")] TimerInfo myTimer,
+		public static void Run([TimerTrigger("0 30 9 * * 1-5")] TimerInfo myTimer,
 			ILogger log, ExecutionContext context)
 		{
 			// Sets the settings model defined as static properties in the class.

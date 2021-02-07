@@ -114,11 +114,11 @@ namespace TarikGuney.ManagerAutomation.Managers
 			// is the last day of the sprint.
 			if (lastDayOfSprint)
 			{
-				_currentIterationMessageSender.SendMessages(messages);
+				_currentIterationMessageSender.SendMessages(messages).Wait();
 			}
 			else
 			{
-				_lastDayOfCurrentIterationMessageSender.SendMessages(messages);
+				_lastDayOfCurrentIterationMessageSender.SendMessages(messages).Wait();
 			}
 
 			Context.Stop(Self);

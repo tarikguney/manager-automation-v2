@@ -95,7 +95,7 @@ namespace TarikGuney.ManagerAutomation.Managers
 			messages.AddRange(longCodeCompleteTask.Result.Content);
 
 			// Send the messages
-			_retrospectiveMessageSender.SendMessages(messages);
+			_retrospectiveMessageSender.SendMessages(messages).Wait();
 
 			// Clearing out and exiting.
 			Context.Stop(Self);

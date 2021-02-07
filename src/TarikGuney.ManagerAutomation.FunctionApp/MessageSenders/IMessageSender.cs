@@ -1,17 +1,10 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace TarikGuney.ManagerAutomation.MessageSenders
 {
 	public interface IMessageSender
 	{
-		void SendMessages(IReadOnlyList<string> messages);
-	}
-
-	class GoogleChatMessageSender : IMessageSender
-	{
-		public void SendMessages(IReadOnlyList<string> messages)
-		{
-
-		}
+		Task SendMessages(IReadOnlyList<string> messages);
 	}
 }

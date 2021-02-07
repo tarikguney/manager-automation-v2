@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using Akka.Actor;
 using Autofac;
 using Microsoft.Azure.WebJobs;
@@ -13,7 +12,7 @@ namespace TarikGuney.ManagerAutomation
 	public static class RetrospectiveAutomationFunction
 	{
 		[FunctionName("RetrospectiveAutomation")]
-		public static async Task RunAsync([TimerTrigger("0 0 10 * * Mon")] TimerInfo myTimer,
+		public static void Run([TimerTrigger("0 0 10 * * Mon")] TimerInfo myTimer,
 			ILogger log, ExecutionContext context)
 		{
 			// Sets the settings model defined as static properties in the class.

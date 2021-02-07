@@ -10,7 +10,7 @@ namespace TarikGuney.ManagerAutomation.AutoFacModules
 		protected override void Load(ContainerBuilder builder)
 		{
 			builder.RegisterType<IRetrospectiveMessageSender>()
-				.As<RestrospectiveGoogleChatMessageSender>();
+				.As<RetrospectiveGoogleChatMessageSender>();
 
 			builder.RegisterType<IIterationWorkItemsRetriever>()
 				.As<AzureDevOpsIterationWorkItemsRetriever>().SingleInstance();

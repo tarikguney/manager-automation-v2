@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using TarikGuney.ManagerAutomation.SettingsModels;
 
@@ -16,8 +17,13 @@ namespace TarikGuney.ManagerAutomation.MessageSenders
 			_googleChatSettingsOptions = googleChatSettingsOptions;
 		}
 
-		public void SendMessages(IReadOnlyList<string> messages)
+		public async Task SendMessages(IReadOnlyList<string> messages)
 		{
+			if (!messages.Any())
+			{
+				return;
+			}
+
 			var allCompleted = messages.All(string.IsNullOrWhiteSpace);
 
 			var httpClient = new HttpClient();
@@ -50,7 +56,7 @@ namespace TarikGuney.ManagerAutomation.MessageSenders
 				};
 			}
 
-			httpClient.PostAsJsonAsync(_googleChatSettingsOptions.Value.WebhookUrl, chatMessage);
+			await httpClient.PostAsJsonAsync(_googleChatSettingsOptions.Value.WebhookUrl, chatMessage);
 		}
 	}
 }

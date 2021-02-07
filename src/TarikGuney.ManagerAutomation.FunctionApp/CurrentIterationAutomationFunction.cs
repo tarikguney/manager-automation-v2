@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using Akka.Actor;
 using Akka.DI.Core;
 using Autofac;
@@ -15,7 +14,7 @@ namespace TarikGuney.ManagerAutomation
 	{
 		// The function will be executed on Monday through Friday at every 9:30 AM and 3:30 PM
 		[FunctionName("CurrentIterationAutomation")]
-		public static async Task RunAsync([TimerTrigger("0 30 9,15 * * 1-5")] TimerInfo myTimer,
+		public static void Run([TimerTrigger("0 30 9,15 * * 1-5")] TimerInfo myTimer,
 			ILogger log, ExecutionContext context)
 		{
 			// Sets the settings model defined as static properties in the class.
