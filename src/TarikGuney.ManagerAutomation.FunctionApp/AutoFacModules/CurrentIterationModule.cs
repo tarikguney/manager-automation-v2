@@ -1,6 +1,7 @@
 using Autofac;
 using TarikGuney.ManagerAutomation.Actors;
 using TarikGuney.ManagerAutomation.IterationWorkItemRetrievers;
+using TarikGuney.ManagerAutomation.Managers;
 using TarikGuney.ManagerAutomation.MessageSenders;
 
 namespace TarikGuney.ManagerAutomation.AutoFacModules
@@ -9,12 +10,12 @@ namespace TarikGuney.ManagerAutomation.AutoFacModules
 	{
 		protected override void Load(ContainerBuilder builder)
 		{
-			builder.RegisterType<IIterationWorkItemsRetriever>()
-				.As<AzureDevOpsIterationWorkItemsRetriever>().SingleInstance();
-			builder.RegisterType<ICurrentIterationMessageSender>()
-				.As<CurrentIterationGoogleChatMessageSender>().SingleInstance();
-			builder.RegisterType<ILastDayOfCurrentIterationMessageSender>()
-				.As<LastDayOfCurrentIterationGoogleChatMessageSender>()
+			builder.RegisterType<AzureDevOpsIterationWorkItemsRetriever>()
+				.As<IIterationWorkItemsRetriever>().SingleInstance();
+			builder.RegisterType<CurrentIterationGoogleChatMessageSender>()
+				.As<ICurrentIterationMessageSender>().SingleInstance();
+			builder.RegisterType<LastDayOfCurrentIterationGoogleChatMessageSender>()
+				.As<ILastDayOfCurrentIterationMessageSender>()
 				.SingleInstance();
 			builder.RegisterType<EstimateWorkItemsActor>().AsSelf();
 			builder.RegisterType<DescriptiveTitleActor>().AsSelf();
@@ -23,6 +24,7 @@ namespace TarikGuney.ManagerAutomation.AutoFacModules
 			builder.RegisterType<LongCodeCompleteActor>().AsSelf();
 			builder.RegisterType<GreatWorkActor>().AsSelf();
 			builder.RegisterType<StillActiveWorkItemsActor>().AsSelf();
+			builder.RegisterType<CurrentIterationManager>().AsSelf();
 		}
 	}
 }
