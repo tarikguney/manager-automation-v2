@@ -1,13 +1,13 @@
-using System.Collections.Generic;
-using System.Configuration;
+using System;
 using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
 using Akka.Actor;
+using Akka.DI.Core;
 using Autofac;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
 using TarikGuney.ManagerAutomation.AutoFacModules;
+using TarikGuney.ManagerAutomation.CommMessages;
+using TarikGuney.ManagerAutomation.Managers;
 
 namespace TarikGuney.ManagerAutomation
 {
@@ -29,24 +29,14 @@ namespace TarikGuney.ManagerAutomation
 			var actorSystem = ActorSystem.Create("manager-report-actor-system");
 			actorSystem.UseAutofac(container);
 
-			/*var iterationWorkItemsTransformBlock = IterationWorkItemsRetrieverTransform.Block;*/
-			/*var managersGoogleMessageSenderActionBlock = ManagersGoogleChatMessageSenderAction.Block;*/
+			var progressReportManager = actorSystem.ActorOf(actorSystem.DI().Props<ProgressReportManager>(),
+				"progress-report-manager");
 
-			//var passedDueWorkItemsTransformBlock = PassedDueWorkItemsTransform.Block;
+			var result =
+				progressReportManager.Ask<AnalysisCompleteResponse>(new StartAnalysisRequest(),
+					TimeSpan.FromMinutes(1));
 
-			var broadcastBlock = new BroadcastBlock<List<JObject>>(null);
-			/*iterationWorkItemsTransformBlock.LinkTo(broadcastBlock);*/
-
-			var batchBlock = new BatchBlock<string>(1);
-
-			/*broadcastBlock.LinkTo(passedDueWorkItemsTransformBlock);
-			passedDueWorkItemsTransformBlock.LinkTo(batchBlock);*/
-
-			/*batchBlock.LinkTo(managersGoogleMessageSenderActionBlock);
-
-			iterationWorkItemsTransformBlock.Post(IterationTimeFrame.Current);
-			iterationWorkItemsTransformBlock.Complete();
-			await managersGoogleMessageSenderActionBlock.Completion;*/
+			result.Wait();
 		}
 	}
 }
