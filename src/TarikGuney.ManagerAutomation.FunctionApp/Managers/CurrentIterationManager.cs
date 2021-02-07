@@ -14,7 +14,6 @@ namespace TarikGuney.ManagerAutomation.Managers
 {
 	public class CurrentIterationManager : ReceiveActor
 	{
-		private int _expectedNumberOfResponses;
 		private readonly ICurrentIterationMessageSender _currentIterationMessageSender;
 		private readonly IIterationWorkItemsRetriever _workItemsRetriever;
 		private readonly ILastDayOfCurrentIterationMessageSender _lastDayOfCurrentIterationMessageSender;
@@ -37,7 +36,7 @@ namespace TarikGuney.ManagerAutomation.Managers
 		private void StartAnalysis(StartAnalysisRequest request)
 		{
 			var firstDayOfSprint = _currentIterationInfoOptions.Value.StartDate.Date == DateTime.Now.Date;
-			
+
 			if (firstDayOfSprint)
 			{
 				Context.Stop(Self);
@@ -91,7 +90,6 @@ namespace TarikGuney.ManagerAutomation.Managers
 				.Ask<ActorResponse<IReadOnlyList<string>>>(currentIterationWorkItems);
 			tasks.Add(greatWorkTask);
 
-
 			var stillActiveWorkItemsTask = lastDayOfSprint
 				? stillActiveWorkItemsActor.Ask<ActorResponse<IReadOnlyList<string>>>(currentIterationWorkItems)
 				: new Task<ActorResponse<IReadOnlyList<string>>>(
@@ -112,7 +110,7 @@ namespace TarikGuney.ManagerAutomation.Managers
 			messages.AddRange(stillActiveWorkItemsTask.Result.Content);
 			messages.AddRange(longCodeCompleteTask.Result.Content);
 
-			// Sending the messages from each actor to the message senders. Using a different message sender if it 
+			// Sending the messages from each actor to the message senders. Using a different message sender if it
 			// is the last day of the sprint.
 			if (lastDayOfSprint)
 			{
