@@ -1,35 +1,15 @@
-# Important Note
-
-[👨‍💻](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAMAAABiM0N1AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAD2UExURUdwTKx0C++jABWjnACqufCnAVmKZAAAAAcDAgXD2DocE+qfA++gABUKB+6lAQAAADocEzkbEiWsnjocEzweEzKwlmStcv/JFgEAAQ7G2yfL3189MQG6zGRBNBzI3ULR4j3P4THN4Fk3LBkcFzMyMysrKwwNDQCnugCwxVAwIjseEzXO4Hn/APq6BDw9PGxJODjO4f7ccvK+Fv3OOyMhJHDqAN6tHPzUWP7ij0duIdOSDEAjGh+7ufTkrWDDA06SCXdTFrSMLEFSMjhDH41uMjIcFiVNAw2jpFK2iASAf1JPSKJyFnNvY3bQAc6xXgBRWFCGMyE2DsheBPUAAAAXdFJOUwAqrsG0+w65gbm1VYpX03Ld/XN1dd39RC2KMgAABUlJREFUWMPVmH9b2kgQxwsa6olate0DISFKkEjCRWykOQlXTCSgEKn2/b+Zzsxuks0PeKR/3X13C+nuzIeZ2d3kiR8+/K9Uqxx/PjgkHXw+rtT+EFP5cnh6dmZNmM7OTg+/VLb/7vFBqU4BYuq60gYpum5OrLPTcstjFusno1miOVLa7eEQOqndRta8zNb4RKCPzVEvr/ncMikUIlGjwExrPi8Yj5ofOegmr4k10duMg33IPilFmMpbXyWgq5ubR1HIYfFwEg8IhSQyQgT7FkHj74IekKPEJBZLTFIwpge0erthXmMRdDX+O9V6BvVJOaIUlGnN1mD2xr3GVyLocZyKcRTGGmZBbU4Cs0fu9ZgBiWKJEUcpwVByWY9y0MTCXchRSglH0U1rUg7qiaPzCXCKJCWJR8+H1MuDMOXHHmaWkgimpBgiQUg9XtU8CNvVFNZgSpllYsqIpgA0n9IKf5/1MiCmKeyKKQTEOLpSIpoATawpbbn1DB3zoBlqTiBSCYdh8PTOmHoZkHBoRxAR5qYMlRin81BQbT4MRSo7tAJojiUy9dB1XS+IQt/nNxF/GIZR4MFwiPNwPykHjWIhCDhOg8txXJLjxENOSBHNEx8RNJo9cM0QpLiNLXIVE0GjMfcYiaDk0ALINH1nG8jxwWQyHz0wj3EGNJtyUURRY6siHhH3EEDdON0u1sjUve0gTzcRlPh0U1AqBLWxRG4QBG4mRYeGcKqNqQlOG0A6lMgJaNFDoepuSEOBQ0Wy3gHCEgV8+6QkzgESFmkDyDAWWLYFjwhMgzDwPC8IRRAfwlkoNpX6ods1oKeg7gIXcmEYBoJc3IdOOAw9RyiS43jhMKKN6QKIFn+NIEOM6BdurV+G0YWbH9uOITxtVnh1R2rcNdwVDIVsS04sHz3GXXAxhIgSWZFp0XYkr1VwJyhYxWzHt8zISr1KQKYXJaDVCkD/pApgIAFFnrkV5Hue79sNaOFq9fLyE/y/keDi58vLagXHGSZ9tCsBAYkvpO9JUcRXCTnfBCGJVtFuRJHk+dwFOCmoueBP67XnSR5GBDVhwdxz8bCg7EACI2/NXRZNQwTFpx9Akk1rRVndCxJAEoBij0VTjMhYcEHyCOLxoP8P1P0PFhQj2cDxYw8jA0rlC6AYw1gsJg7yM04FkNHEHeA6MedHRjHJcdnabwS9Lp+Y/s1KhZYRN1u+loNe+2oq8TorYeb6tQz0eq22bi9RF5eCLi4vUJnBC/rPoKVe90pAS1W72FGauiwFdXYFDTaABjtyLjeBOpc7KgfirxB/AOpwEH+F4C81e2rndjcNOuqe+FLD35H2YfUHO+m2pe4X3+EQNOgwDTqDtCfqFPpGUKeoliZrMnStdPL9IE2Oj4PceheoclT9qmqdVqwOb8CRqREp37QCqHJiS8+qJhgxaeJp1Vp5FUCVI8m2n4uWnR1BlRPgOCUgTcObRp+a2i8F1esC6si2OUhLOmuy2u8zDnzJLS3f1GdJOkpItSo8fxAkI0PT+CdKZgwmWctLVp9tW6onAeHdnoG0FEU9gaBUTQyZLNVnx5ZO4piqkFgDV634k3lQMSIHnKWjGARP1gaLiLH4hQyga2jY4Z8aT6SdgewqA9UlKBGBZDoP7IsOBnGo4YfMT0vSCISPuXpcJCBhajGEX8gAioUoPiin8wRKQzoPJCkIn1Q5awV21xmp6SQHAqiRgmp7y7e35TIDkreBUvUBBGXhqdX2npbLUlCWQ7kVQLji1VoMQhV/MBdQ0UJVv+LpOon/PnW+h9r/q6D9nIoW55V6tVr/b/5h7zfgTWr1FVH6ngAAAABJRU5ErkJggg==) **Development in progress!**
-
-There is already a project of mine named [Manager Automation](https://github.com/tarikguney/manager-automation), but as I was learning [Akka.NET](https://getakka.net), I decided to re-write the entire project in Akka. The original version was written in [TPL Dataflow](https://docs.microsoft.com/en-us/dotnet/standard/parallel-programming/dataflow-task-parallel-library), which is a great library; but overall, I found the [Actor Model](https://en.wikipedia.org/wiki/Actor_model) constructs more straightforward in Akka than TPL Dataflow. Akka also offers more constructs for the development teams to focus on the business results rather than re-inventing various existing concepts.  Some of the areas Akka.NET offers better development support that I am interested in this project are:
-
-1. [Dependency Injection](https://getakka.net/articles/actors/dependency-injection.html)
-
-2. [Streaming](https://getakka.net/articles/streams/introduction.html)
-
-3. [Testing Actors](https://getakka.net/articles/actors/testing-actor-systems.html)
-
-My newly acquired experience from this re-write of this project in Akka.NET will be incorporated into [Projekt Hive](https://github.com/tarikguney/projekt-hive), which is planned to be a complete re-imagination of [Manager Automation](https://www.github.com/tarikguney/manager-automation) from the ground up.
-
-If you are interested in Akka.NET and want to see a project being re-written with actors, then follow this project. You can compare the original commit to the latest commit to see the evolution of the project. It is probably a rare moment to see a live project, that is originally written with TPL Dataflow, being re-written in Akka.NET. So, enjoy, and don't forget to leave your comments and suggestions on the [Discussions](https://github.com/tarikguney/manager-automation-v2/discussions) page.
-
-## Live Notes and Project Plans
-
-You can find my live notes about the things I learned about Akka.NET and the project development plan outline in this Google Document: https://docs.google.com/document/d/11-Sh4f75UOk1uPy7XbmOxfBiARnpPlnXc7z3pwl9We4/edit?usp=sharing. The document will be updated regularly as the project progresses, and I learn new things in Akka.NET.
-
-------
-
 Developed with the following technologies by [@tarikguney](https://github.com/tarikguney)
 
-![](./assets/logo/azure-functions.png) ![](./assets/logo/dotnet-core-logo.png)
+![](./assets/logo/azure-functions.png) ![](./assets/logo/dotnet-core-logo.png) <img src="https://getakka.net/images/mainlogo.png" height="50px">
 
 ![](./assets/manager-automation-hq-banner.png)
 
 Table of Contents
 =================
 <!--ts-->
+   * [Table of Contents](#table-of-contents)
    * [What is it?](#what-is-it)
+   * [What's new in Version 2](#whats-new-in-version-2)
    * [Underlying Design Principle](#underlying-design-principle)
    * [How does it look?](#how-does-it-look)
       * [In-Sprint action reminders](#in-sprint-action-reminders)
@@ -65,12 +45,25 @@ Table of Contents
          * [Finding Google Chat Id (UserId)](#finding-google-chat-id-userid)
    * [FAQ](#faq)
 
-<!-- Added by: tarikguney, at: Sun Dec 27 23:39:31 MST 2020 -->
+<!-- Added by: tarikguney, at: Sun Feb  7 23:24:33 MST 2021 -->
 
 <!--te-->
 
 # What is it?
 **As an engineering manager, you realize that a lot of your time goes to repetitive tasks which also include guiding your team in keeping the sprint board up-to-date with enough level of details for an accurate work tracking.** There could be many reasons why you find yourself in this situation, but regardless of the reason, Manager Automation will take some of that burden off your shoulders. It will continuously analyze the current Sprint's board. It will remind the team of the missing information in the form of actionable reminders that are important for the smooth execution of every Sprint. **Note that these reminders play an essential role in guiding the team and new hires towards the expectations of the team and company culture.**
+# What's new in Version 2
+
+There is already a project of mine named [Manager Automation](https://github.com/tarikguney/manager-automation), but as I was learning [Akka.NET](https://getakka.net), I decided to re-write the entire project in Akka. The original version was written in [TPL Dataflow](https://docs.microsoft.com/en-us/dotnet/standard/parallel-programming/dataflow-task-parallel-library), which is a great library; but overall, I found the [Actor Model](https://en.wikipedia.org/wiki/Actor_model) constructs more straightforward in Akka than TPL Dataflow. Akka also offers more constructs for the development teams to focus on the business results rather than re-inventing various existing concepts.  Some of the areas Akka.NET offers better development support that I am interested in this project are:
+
+1. [Dependency Injection](https://getakka.net/articles/actors/dependency-injection.html)
+
+2. [Streaming](https://getakka.net/articles/streams/introduction.html)
+
+3. [Testing Actors](https://getakka.net/articles/actors/testing-actor-systems.html)
+
+My newly acquired experience from this re-write of this project in Akka.NET will be incorporated into [Projekt Hive](https://github.com/tarikguney/projekt-hive), which is planned to be a complete re-imagination of [Manager Automation](https://www.github.com/tarikguney/manager-automation) from the ground up.
+
+If you are interested in Akka.NET and want to see a project being re-written with actors, then follow this project. You can compare the original commit to the latest commit to see the evolution of the project. It is probably a rare moment to see a live project, that is originally written with TPL Dataflow, being re-written in Akka.NET. So, enjoy, and don't forget to leave your comments and suggestions on the [Discussions](https://github.com/tarikguney/manager-automation-v2/discussions) page.
 
 # Underlying Design Principle
 The communication of the reminders in the solution is intentionally done in a public team chat room. Besides being public, the messages are kept straightforward too. It communicates the required actions through Google Chat (and Slack, etc., in the future) in simple and concise words. It is visible and repetitive, as these are perhaps some of the most effective factors to incorporate cultural elements into a team's daily life. Rare communication of hard-to-remember tasks will not make it into the team culture early enough. They have to be communicated frequently in a place where they are most visible to make them easy to follow by the team to become a part of the team culture.
@@ -293,7 +286,7 @@ You can define teams in Azure DevOps, and boards are associated with teams. Use 
 
 In order to determine whom to send the message to, there should be some mapping between Azure DevOps users and Google Chat users. Google Chat Webhook API only works with Google Chat User Ids, and this setting is to map between these values. Map all of the team members in this setting as the recommended approach. Otherwise, some members may not be properly mentioned in Google Chat. This value accepts multiple mappings separated by semi-colon (`;`). Check out this link to see how to extract Google Chat Id: [Finding Google Chat Id (UserId)](#finding-google-chat-id-userid)
 
-`AZURE-DEVOPS-USER1-EMAIL:GOOGLE-CHAT-ID-1` would translate to `michael.smith@gmail.com:2333181726262`in a real-world setting. Another example with multiple mappings would be as follows: `michael.smith@gmail.com:2333181726262;tarik.guney@fakeaddress.com:23344556311`. Note the `;` as the separator of these mappings. You can add as many as you want. 
+`AZURE-DEVOPS-USER1-EMAIL:GOOGLE-CHAT-ID-1` would translate to `michael.smith@gmail.com:2333181726262`in a real-world setting. Another example with multiple mappings would be as follows: `michael.smith@gmail.com:2333181726262;tarik.guney@fakeaddress.com:23344556311`. Note the `;` as the separator of these mappings. You can add as many as you want.
 
 #### `EngineeringManagerInfo__AzureDevOpsEmail`
 
