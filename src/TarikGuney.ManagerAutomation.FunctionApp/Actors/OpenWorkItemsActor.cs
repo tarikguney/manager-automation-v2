@@ -89,7 +89,7 @@ namespace TarikGuney.ManagerAutomation.Actors
 					"BOARD: Still open in {currentState} state. Story \"{workItemId}:{workItemTitle}\". Assigned to {userEmail} in {currentIteration}.",
 					workItemId, workItemTitle, userEmail, _currentIteration.Name);
 
-				messages.Append(
+				messages.Add(
 					$"{chatDisplayName}, <{workItemUrl}|{workItemTitle}> is in *{currentStatus}* state! {recommendedActionText}");
 			}
 
