@@ -36,7 +36,7 @@ namespace TarikGuney.ManagerAutomation.MessageSenders
 			var chatMessage = new
 			{
 				text = $"Good morning team! 👋 Welcome to the {_currentIterationOptions.Value.Name}! 🎉 {actionMessage}\n\n" +
-				       string.Join("", messages)
+				       string.Join("\n", messages)
 			};
 
 			await httpClient.PostAsJsonAsync(_googleChatSettingsOptions.Value.WebhookUrl, chatMessage);
