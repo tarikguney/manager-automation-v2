@@ -9,10 +9,12 @@ namespace TarikGuney.ManagerAutomation.AutoFacModules
 	{
 		protected override void Load(ContainerBuilder builder)
 		{
-			builder.RegisterType<IIterationWorkItemsRetriever>()
-				.As<AzureDevOpsIterationWorkItemsRetriever>().SingleInstance();
-			builder.RegisterType<IManagersReportMessageSender>()
-				.As<ManagersReportGoogleChatMessageSender>().SingleInstance();
+			builder.RegisterType<AzureDevOpsIterationWorkItemsRetriever>()
+				.As<IIterationWorkItemsRetriever>().SingleInstance();
+
+			builder.RegisterType<ManagersReportGoogleChatMessageSender>()
+				.As<IManagersReportMessageSender>().SingleInstance();
+
 			builder.RegisterType<PassedDueWorkItemsActor>().AsSelf();
 		}
 	}

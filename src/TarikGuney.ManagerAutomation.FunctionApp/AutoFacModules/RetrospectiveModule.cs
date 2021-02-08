@@ -9,13 +9,15 @@ namespace TarikGuney.ManagerAutomation.AutoFacModules
 	{
 		protected override void Load(ContainerBuilder builder)
 		{
-			builder.RegisterType<IRetrospectiveMessageSender>()
-				.As<RetrospectiveGoogleChatMessageSender>();
+			builder.RegisterType<RetrospectiveGoogleChatMessageSender>()
+				.As<IRetrospectiveMessageSender>().SingleInstance();
 
-			builder.RegisterType<IIterationWorkItemsRetriever>()
-				.As<AzureDevOpsIterationWorkItemsRetriever>().SingleInstance();
-			builder.RegisterType<ICurrentIterationMessageSender>()
-				.As<CurrentIterationGoogleChatMessageSender>().SingleInstance();
+			builder.RegisterType<AzureDevOpsIterationWorkItemsRetriever>()
+				.As<IIterationWorkItemsRetriever>().SingleInstance();
+
+			builder.RegisterType<CurrentIterationGoogleChatMessageSender>()
+				.As<ICurrentIterationMessageSender>().SingleInstance();
+
 			builder.RegisterType<EstimateWorkItemsActor>().AsSelf();
 			builder.RegisterType<DescriptiveTitleActor>().AsSelf();
 			builder.RegisterType<DescriptionActor>().AsSelf();

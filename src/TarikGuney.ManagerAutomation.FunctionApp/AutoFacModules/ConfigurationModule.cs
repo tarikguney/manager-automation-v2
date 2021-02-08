@@ -65,9 +65,8 @@ namespace TarikGuney.ManagerAutomation.AutoFacModules
 				new AuthenticationHeaderValue("Basic", azureDevOpsSettings.ApiKey);
 
 			builder
-				.RegisterInstance(
-					new OptionsWrapper<HttpClient>(authorizedHttpClient))
-				.As<IOptions<HttpClient>>();
+				.RegisterInstance(authorizedHttpClient)
+				.As<HttpClient>();
 
 			var currentIterationInfo = GetCurrentIterationSettings(authorizedHttpClient, azureDevOpsSettings);
 			builder
@@ -106,7 +105,7 @@ namespace TarikGuney.ManagerAutomation.AutoFacModules
 			var config = new ConfigurationBuilder()
 				.SetBasePath(context.FunctionAppDirectory)
 				.AddJsonFile("local.settings.json", true, reloadOnChange: true)
-				.AddJsonFile("secrets/appsettings.personal.json", true, reloadOnChange: true)
+				.AddJsonFile("secrets/appsettings.personal.json", false, reloadOnChange: true)
 				//.AddJsonFile("secrets/appsettings.msi.json", optional: true, reloadOnChange: true)
 				.AddEnvironmentVariables()
 				.Build();
