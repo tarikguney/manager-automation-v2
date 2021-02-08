@@ -20,8 +20,7 @@ namespace TarikGuney.ManagerAutomation.Managers
 
 		public RetrospectiveManager(IIterationWorkItemsRetriever workItemsRetriever,
 			IRetrospectiveMessageSender retrospectiveMessageSender,
-			IOptions<CurrentIterationInfo> currentIterationInfoOptions
-			)
+			IOptions<CurrentIterationInfo> currentIterationInfoOptions)
 		{
 			_workItemsRetriever = workItemsRetriever;
 			_retrospectiveMessageSender = retrospectiveMessageSender;

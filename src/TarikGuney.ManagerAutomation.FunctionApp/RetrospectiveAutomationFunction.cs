@@ -1,5 +1,6 @@
 using System;
 using Akka.Actor;
+using Akka.DI.Core;
 using Autofac;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
@@ -27,7 +28,7 @@ namespace TarikGuney.ManagerAutomation
 			var actorSystem = ActorSystem.Create("retrospective-automation-actor-system");
 			actorSystem.UseAutofac(container);
 			var retrospectiveManager =
-				actorSystem.ActorOf(Props.Create<RetrospectiveManager>(), "retrospective-manager");
+				actorSystem.ActorOf(actorSystem.DI().Props<RetrospectiveManager>(), "retrospective-manager");
 			var result = retrospectiveManager.Ask(new StartAnalysisRequest(),
 				TimeSpan.FromMinutes(1));
 			result.Wait();
