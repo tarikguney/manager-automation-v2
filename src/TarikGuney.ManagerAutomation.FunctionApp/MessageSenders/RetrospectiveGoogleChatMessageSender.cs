@@ -33,10 +33,15 @@ namespace TarikGuney.ManagerAutomation.MessageSenders
 				: "Unfortunately, there are some *incomplete work items from the previous sprint.* " +
 				  "Please review and complete them *before the sprint kickoff meeting*";
 
+			// Not congratulating the individuals if the entire team is already finished everything.
+			var finalMessage = allCompleted
+				? $"Good morning team! 👋 Welcome to the {_currentIterationOptions.Value.Name}! 🎉 {actionMessage}"
+				: $"Good morning team! 👋 Welcome to the {_currentIterationOptions.Value.Name}! 🎉 {actionMessage}\n\n" +
+				  string.Join("\n", messages);
+
 			var chatMessage = new
 			{
-				text = $"Good morning team! 👋 Welcome to the {_currentIterationOptions.Value.Name}! 🎉 {actionMessage}\n\n" +
-				       string.Join("\n", messages)
+				text = finalMessage
 			};
 
 			await httpClient.PostAsJsonAsync(_googleChatSettingsOptions.Value.WebhookUrl, chatMessage);
