@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Akka.Actor;
 using Akka.DI.Core;
@@ -89,9 +90,15 @@ namespace TarikGuney.ManagerAutomation.Managers
 			var messages = new List<string>();
 			messages.AddRange(estimateWorkItemTask.Result.Content);
 			messages.AddRange(descriptiveTitleTask.Result.Content);
-			messages.AddRange(greatPreviousIterationTask.Result.Content);
 			messages.AddRange(openWorkItemsTask.Result.Content);
 			messages.AddRange(longCodeCompleteTask.Result.Content);
+
+			// There is no reason to congratulate individual members if the team closed
+			// all of the work items! This also simplifies the code a little bit.
+			if (messages.Any())
+			{
+				messages.AddRange(greatPreviousIterationTask.Result.Content);
+			}
 
 			// Send the messages
 			_retrospectiveMessageSender.SendMessages(messages).Wait();

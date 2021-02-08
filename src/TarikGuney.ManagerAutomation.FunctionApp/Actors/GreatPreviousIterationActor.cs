@@ -12,19 +12,14 @@ namespace TarikGuney.ManagerAutomation.Actors
 {
 	public class GreatPreviousIterationActor : ReceiveActor
 	{
-		public const string GreatWorkGreeting = "good job";
-
 		private readonly ILogger _logger;
-		private readonly AzureDevOpsSettings _azureDevOpsSettings;
 		private readonly List<DevOpsChatUserMap> _devOpsChatUserMaps;
 		private readonly CurrentIterationInfo _currentIteration;
 
-		public GreatPreviousIterationActor(IOptions<AzureDevOpsSettings> azureDevOpsSettingsOptions,
-			IOptions<List<DevOpsChatUserMap>> devOpsChatUserMapsOptions,
+		public GreatPreviousIterationActor(IOptions<List<DevOpsChatUserMap>> devOpsChatUserMapsOptions,
 			IOptions<CurrentIterationInfo> currentIterationOptions, ILogger logger)
 		{
 			_logger = logger;
-			_azureDevOpsSettings = azureDevOpsSettingsOptions.Value;
 			_devOpsChatUserMaps = devOpsChatUserMapsOptions.Value;
 			_currentIteration = currentIterationOptions.Value;
 
@@ -75,7 +70,7 @@ namespace TarikGuney.ManagerAutomation.Actors
 					_currentIteration.Name, userEmail);
 
 				messages.Add(
-					$"{chatDisplayName}, {GreatWorkGreeting}! 👏 You *closed* all of *your previous iteration* work items! 🎉");
+					$"{chatDisplayName}, great work! 👏 You *closed* all of *your previous iteration* work items! 🎉");
 			}
 
 			Sender.Tell(new ActorResponse<IReadOnlyList<string>>(messages, true));

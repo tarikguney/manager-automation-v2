@@ -3,7 +3,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
-using TarikGuney.ManagerAutomation.Actors;
 using TarikGuney.ManagerAutomation.SettingsModels;
 
 namespace TarikGuney.ManagerAutomation.MessageSenders
@@ -13,7 +12,8 @@ namespace TarikGuney.ManagerAutomation.MessageSenders
 		private readonly IOptions<CurrentIterationInfo> _currentIterationOptions;
 		private readonly IOptions<GoogleChatSettings> _googleChatSettingsOptions;
 
-		public RetrospectiveGoogleChatMessageSender(IOptions<CurrentIterationInfo> _currentIterationOptions,
+		public RetrospectiveGoogleChatMessageSender(
+			IOptions<CurrentIterationInfo> _currentIterationOptions,
 			IOptions<GoogleChatSettings> _googleChatSettingsOptions)
 		{
 			this._currentIterationOptions = _currentIterationOptions;
@@ -22,9 +22,7 @@ namespace TarikGuney.ManagerAutomation.MessageSenders
 
 		public async Task SendMessages(IReadOnlyList<string> messages)
 		{
-			var allCompleted = messages.All(m => string.IsNullOrEmpty(m) ||
-			                                     m.ToLower().Contains(
-				                                     GreatPreviousIterationActor.GreatWorkGreeting.ToLower()));
+			var allCompleted = !messages.Any();
 
 			var httpClient = new HttpClient();
 
