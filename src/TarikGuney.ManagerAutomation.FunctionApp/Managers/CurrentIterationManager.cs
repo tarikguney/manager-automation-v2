@@ -90,13 +90,16 @@ namespace TarikGuney.ManagerAutomation.Managers
 				.Ask<ActorResponse<IReadOnlyList<string>>>(currentIterationWorkItems);
 			tasks.Add(greatWorkTask);
 
-			/*var stillActiveWorkItemsTask = lastDayOfSprint
-				? stillActiveWorkItemsActor.Ask<ActorResponse<IReadOnlyList<string>>>(currentIterationWorkItems)
-				: new Task<ActorResponse<IReadOnlyList<string>>>(
-					() =>
-						new ActorResponse<IReadOnlyList<string>>(null, false));
+			var dummyStillActiveWorkItemsTask = new Task<ActorResponse<IReadOnlyList<string>>>(
+				() =>
+					new ActorResponse<IReadOnlyList<string>>(new List<string>(), false));
+			dummyStillActiveWorkItemsTask.Start();
 
-			tasks.Add(stillActiveWorkItemsTask);*/
+			var stillActiveWorkItemsTask = lastDayOfSprint
+				? stillActiveWorkItemsActor.Ask<ActorResponse<IReadOnlyList<string>>>(currentIterationWorkItems)
+				: dummyStillActiveWorkItemsTask;
+
+			tasks.Add(stillActiveWorkItemsTask);
 
 			// Waiting for all the of the actors to finish their work and return a response back.
 			Task.WaitAll(tasks.ToArray());
@@ -107,7 +110,7 @@ namespace TarikGuney.ManagerAutomation.Managers
 			messages.AddRange(descriptiveTitleTask.Result.Content);
 			messages.AddRange(greatWorkTask.Result.Content);
 			messages.AddRange(activeWorkItemTask.Result.Content);
-			//messages.AddRange(stillActiveWorkItemsTask.Result.Content);
+			messages.AddRange(stillActiveWorkItemsTask.Result.Content);
 			messages.AddRange(longCodeCompleteTask.Result.Content);
 
 			// Sending the messages from each actor to the message senders. Using a different message sender if it

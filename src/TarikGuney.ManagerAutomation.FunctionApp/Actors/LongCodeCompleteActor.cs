@@ -92,7 +92,7 @@ namespace TarikGuney.ManagerAutomation.Actors
 					_currentIteration.Name);
 
 				// todo Include pr follow up message for PR Submitted state.
-				messages.Append(
+				messages.Add(
 					$"{chatDisplayName}, *follow up* on your work of <{workItemUrl}|{workItemTitle}>. " +
 					$"It is in *{workItemState}* state for *{idleForTimeSpan.TotalDays}* day(s). Don't forget to *have it verified* by a fellow engineer!");
 			}
