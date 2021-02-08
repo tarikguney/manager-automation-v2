@@ -1,6 +1,7 @@
 using Autofac;
 using TarikGuney.ManagerAutomation.Actors;
 using TarikGuney.ManagerAutomation.IterationWorkItemRetrievers;
+using TarikGuney.ManagerAutomation.Managers;
 using TarikGuney.ManagerAutomation.MessageSenders;
 
 namespace TarikGuney.ManagerAutomation.AutoFacModules
@@ -24,6 +25,7 @@ namespace TarikGuney.ManagerAutomation.AutoFacModules
 			builder.RegisterType<LongCodeCompleteActor>().AsSelf();
 			builder.RegisterType<OpenWorkItemsActor>().AsSelf();
 			builder.RegisterType<GreatPreviousIterationActor>().AsSelf();
+			builder.RegisterType<RetrospectiveManager>().AsSelf();
 		}
 	}
 }

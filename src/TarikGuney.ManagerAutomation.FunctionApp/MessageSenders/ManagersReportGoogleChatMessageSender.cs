@@ -36,7 +36,7 @@ namespace TarikGuney.ManagerAutomation.MessageSenders
 
 			var finalMessage = messages.All(string.IsNullOrEmpty)
 				? "The board is looking good and every thing is on track"
-				: string.Join("\n", messages);
+				: string.Join("\n\n", messages);
 
 			var chatMessage = new
 			{
