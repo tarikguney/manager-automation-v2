@@ -36,7 +36,7 @@ namespace TarikGuney.ManagerAutomation.Managers
 		private void StartAnalysis(StartAnalysisRequest request)
 		{
 			var firstDayOfSprint = _currentIterationInfoOptions.Value.StartDate.Date == DateTime.Now.Date;
-
+			// There is another function that runs when it is the first day of the sprint!
 			if (firstDayOfSprint)
 			{
 				Context.Stop(Self);
@@ -61,7 +61,7 @@ namespace TarikGuney.ManagerAutomation.Managers
 				Context.ActorOf(Context.DI().Props<GreatWorkActor>(), "great-work-actor");
 			var stillActiveWorkItemsActor =
 				Context.ActorOf(Context.DI().Props<StillActiveWorkItemsActor>(),
-				"still-active-work-items-actor");
+					"still-active-work-items-actor");
 
 			// Running the actors.
 			var tasks = new List<Task>();
@@ -117,11 +117,11 @@ namespace TarikGuney.ManagerAutomation.Managers
 			// is the last day of the sprint.
 			if (lastDayOfSprint)
 			{
-				_currentIterationMessageSender.SendMessages(messages).Wait();
+				_lastDayOfCurrentIterationMessageSender.SendMessages(messages).Wait();
 			}
 			else
 			{
-				_lastDayOfCurrentIterationMessageSender.SendMessages(messages).Wait();
+				_currentIterationMessageSender.SendMessages(messages).Wait();
 			}
 
 			Context.Stop(Self);
