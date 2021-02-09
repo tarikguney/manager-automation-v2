@@ -35,7 +35,7 @@ namespace TarikGuney.ManagerAutomation.MessageSenders
 			var finalMessage = allCompleted
 				? $"Good morning team! 👋 Welcome to the {_currentIterationOptions.Value.Name}! 🎉 {actionMessage}"
 				: $"Good morning team! 👋 Welcome to the {_currentIterationOptions.Value.Name}! 🎉 {actionMessage}\n\n" +
-				  string.Join("\n", messages);
+				  string.Join("\n\n", messages);
 
 			var chatMessage = new
 			{

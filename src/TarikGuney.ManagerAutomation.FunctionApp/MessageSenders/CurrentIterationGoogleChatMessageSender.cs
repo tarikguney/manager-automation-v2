@@ -52,7 +52,7 @@ namespace TarikGuney.ManagerAutomation.MessageSenders
 
 				chatMessage = new
 				{
-					text = $"{randomGreeting}:\n\n" + string.Join("", messages)
+					text = $"{randomGreeting}:\n\n" + string.Join("\n\n", messages)
 				};
 			}
 
