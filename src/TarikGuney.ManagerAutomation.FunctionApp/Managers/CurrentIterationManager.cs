@@ -109,6 +109,7 @@ namespace TarikGuney.ManagerAutomation.Managers
 			var messages = new List<string>();
 			messages.AddRange(estimateWorkItemTask.Result.Content);
 			messages.AddRange(descriptiveTitleTask.Result.Content);
+			messages.AddRange(descriptionTask.Result.Content);
 			messages.AddRange(activeWorkItemTask.Result.Content);
 			messages.AddRange(stillActiveWorkItemsTask.Result.Content);
 			messages.AddRange(longCodeCompleteTask.Result.Content);
