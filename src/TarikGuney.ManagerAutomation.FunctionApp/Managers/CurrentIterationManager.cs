@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Akka.Actor;
 using Akka.DI.Core;
@@ -108,10 +109,17 @@ namespace TarikGuney.ManagerAutomation.Managers
 			var messages = new List<string>();
 			messages.AddRange(estimateWorkItemTask.Result.Content);
 			messages.AddRange(descriptiveTitleTask.Result.Content);
-			messages.AddRange(greatWorkTask.Result.Content);
 			messages.AddRange(activeWorkItemTask.Result.Content);
 			messages.AddRange(stillActiveWorkItemsTask.Result.Content);
 			messages.AddRange(longCodeCompleteTask.Result.Content);
+
+			// Sending "great work" message when there are no other messages makes the greeting a little awkward
+			// as the greeting asks for completion some work items, but there is none.
+			// todo Improve this as I still want to send the positive feedback even if there is nothing else.
+			if (messages.Any())
+			{
+				messages.AddRange(greatWorkTask.Result.Content);
+			}
 
 			// Sending the messages from each actor to the message senders. Using a different message sender if it
 			// is the last day of the sprint.
