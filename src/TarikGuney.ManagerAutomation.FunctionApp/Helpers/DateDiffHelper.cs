@@ -3,6 +3,7 @@ using System.Linq;
 
 namespace TarikGuney.ManagerAutomation.Helpers
 {
+	// todo Convert this into a injectable service.
     public static class DateDiffHelper
     {
         public static int CalculateWeekendDays(DateTime startDate, DateTime endDate)
