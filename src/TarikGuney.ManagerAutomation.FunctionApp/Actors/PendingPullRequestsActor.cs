@@ -66,8 +66,8 @@ namespace TarikGuney.ManagerAutomation.Actors
 					: $"<users/{devOpsGoogleChatUserMap!.GoogleChatUserId}>";
 
 				messages.Add(
-					$"{chatDisplayName}, the pull request <{prUrl}|{prTitle}> is pending for {pendingForDays} day(s). " +
-					$"Please have it reviewed and merge it.");
+					$"{chatDisplayName}, *the pull request* <{prUrl}|{prTitle}> is pending for *{pendingForDays} day(s)*. " +
+					$"Please have it reviewed and merged.");
 			}
 
 			Sender.Tell(new ActorResponse<IReadOnlyList<string>>(messages, true));
