@@ -93,6 +93,8 @@ When it is the first day of the new Sprint, the automation service will analyze 
 
 **Note:** Ignore the `0 days` part. It was for testing purposes. In actual use, the number will be bigger.
 
+Reading the existing PRs from the Azure DevsOps, and sending the engineering team daily reminders to ensure the developed code gets merged into the main branch. This increases the awareness of work completion among the team. At the end of the day, it is only the merged code that actually turns into a business value.
+
 ![CleanShot 2021-02-13 at 17.25.20@2x](/Users/tarikguney/Desktop/oss/manager-automation-v2/assets/screenshots/pull-request-reminders.png)
 
 ## Managers-only reminders
