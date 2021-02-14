@@ -95,7 +95,7 @@ When it is the first day of the new Sprint, the automation service will analyze 
 
 Reading the existing PRs from the Azure DevsOps, and sending the engineering team daily reminders to ensure the developed code gets merged into the main branch. This increases the awareness of work completion among the team. At the end of the day, it is only the merged code that actually turns into a business value.
 
-![CleanShot 2021-02-13 at 17.25.20@2x](/Users/tarikguney/Desktop/oss/manager-automation-v2/assets/screenshots/pull-request-reminders.png)
+![Pull Request Reminders Screenshot](assets/screenshots/pull-request-reminders.png)
 
 ## Managers-only reminders
 As an engineering manager, it is often crucial to be aware of the work's progression on time and catch the delay before becoming a big problem. There might be many reasons why work is delayed. For instance, engineering might be blocked. Regardless of the reason, if a task is taking an unreasonable amount of time, you will need to reach out and see what's going on and how you can help the team member with the progression of the work. The Manager Automation service collects this information for you -- the engineering manager -- and reports them daily in a private Google Chat room.
