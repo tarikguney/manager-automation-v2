@@ -89,6 +89,12 @@ When it is the first day of the new Sprint, the automation service will analyze 
 
 <img src="./assets/screenshots/new-sprint-reminders.png" width="800">
 
+## Pull Request Reminders
+
+**Note:** Ignore the `0 days` part. It was for testing purposes. In actual use, the number will be bigger.
+
+![CleanShot 2021-02-13 at 17.25.20@2x](/Users/tarikguney/Desktop/oss/manager-automation-v2/assets/screenshots/pull-request-reminders.png)
+
 ## Managers-only reminders
 As an engineering manager, it is often crucial to be aware of the work's progression on time and catch the delay before becoming a big problem. There might be many reasons why work is delayed. For instance, engineering might be blocked. Regardless of the reason, if a task is taking an unreasonable amount of time, you will need to reach out and see what's going on and how you can help the team member with the progression of the work. The Manager Automation service collects this information for you -- the engineering manager -- and reports them daily in a private Google Chat room.
 
