@@ -19,17 +19,20 @@ namespace TarikGuney.ManagerAutomation.Managers
 		private readonly IIterationWorkItemsRetriever _workItemsRetriever;
 		private readonly ILastDayOfCurrentIterationMessageSender _lastDayOfCurrentIterationMessageSender;
 		private readonly IOptions<CurrentIterationInfo> _currentIterationInfoOptions;
+		private readonly IPullRequestsRetriever _pullRequestsRetriever;
 
 		public CurrentIterationManager(ICurrentIterationMessageSender currentIterationMessageSender,
 			IIterationWorkItemsRetriever workItemsRetriever,
 			ILastDayOfCurrentIterationMessageSender lastDayOfCurrentIterationMessageSender,
-			IOptions<CurrentIterationInfo> currentIterationInfoOptions
+			IOptions<CurrentIterationInfo> currentIterationInfoOptions,
+			IPullRequestsRetriever pullRequestsRetriever
 		)
 		{
 			_currentIterationMessageSender = currentIterationMessageSender;
 			_workItemsRetriever = workItemsRetriever;
 			_lastDayOfCurrentIterationMessageSender = lastDayOfCurrentIterationMessageSender;
 			_currentIterationInfoOptions = currentIterationInfoOptions;
+			_pullRequestsRetriever = pullRequestsRetriever;
 
 			Receive<StartAnalysisRequest>(StartAnalysis);
 		}
@@ -46,6 +49,7 @@ namespace TarikGuney.ManagerAutomation.Managers
 
 			var lastDayOfSprint = _currentIterationInfoOptions.Value.FinishDate.Date == DateTime.Now.Date;
 			var currentIterationWorkItems = _workItemsRetriever.GetWorkItems(IterationTimeFrame.Current);
+			var pendingPullRequests = _pullRequestsRetriever.GetPullRequests();
 
 			// Creating the subordinate actors.
 			var estimateWorkItemActor =
@@ -63,6 +67,9 @@ namespace TarikGuney.ManagerAutomation.Managers
 			var stillActiveWorkItemsActor =
 				Context.ActorOf(Context.DI().Props<StillActiveWorkItemsActor>(),
 					"still-active-work-items-actor");
+
+			var pendingPullRequestsActor =
+				Context.ActorOf(Context.DI().Props<PendingPullRequestsActor>(), "pending-pull-requests-actor");
 
 			// Running the actors.
 			var tasks = new List<Task>();
@@ -99,8 +106,11 @@ namespace TarikGuney.ManagerAutomation.Managers
 			var stillActiveWorkItemsTask = lastDayOfSprint
 				? stillActiveWorkItemsActor.Ask<ActorResponse<IReadOnlyList<string>>>(currentIterationWorkItems)
 				: dummyStillActiveWorkItemsTask;
-
 			tasks.Add(stillActiveWorkItemsTask);
+
+			var longPendingPullRequestsTask =
+				pendingPullRequestsActor.Ask<ActorResponse<IReadOnlyList<string>>>(pendingPullRequests);
+			tasks.Add(longPendingPullRequestsTask);
 
 			// Waiting for all the of the actors to finish their work and return a response back.
 			Task.WaitAll(tasks.ToArray());
@@ -113,6 +123,7 @@ namespace TarikGuney.ManagerAutomation.Managers
 			messages.AddRange(activeWorkItemTask.Result.Content);
 			messages.AddRange(stillActiveWorkItemsTask.Result.Content);
 			messages.AddRange(longCodeCompleteTask.Result.Content);
+			messages.AddRange(longPendingPullRequestsTask.Result.Content);
 
 			// Sending "great work" message when there are no other messages makes the greeting a little awkward
 			// as the greeting asks for completion some work items, but there is none.

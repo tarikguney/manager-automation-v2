@@ -24,6 +24,8 @@ namespace TarikGuney.ManagerAutomation.AutoFacModules
 			builder.RegisterType<LongCodeCompleteActor>().AsSelf();
 			builder.RegisterType<GreatWorkActor>().AsSelf();
 			builder.RegisterType<StillActiveWorkItemsActor>().AsSelf();
+			builder.RegisterType<PendingPullRequestsActor>().AsSelf();
+			builder.RegisterType<AzureDevOpsAllPullRequestsRetriever>().As<IPullRequestsRetriever>();
 			builder.RegisterType<CurrentIterationManager>().AsSelf();
 		}
 	}
