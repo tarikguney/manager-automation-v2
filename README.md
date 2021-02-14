@@ -15,6 +15,7 @@ Table of Contents
       * [In-Sprint action reminders](#in-sprint-action-reminders)
       * [End-of-sprint action reminders](#end-of-sprint-action-reminders)
       * [New Sprint action reminders](#new-sprint-action-reminders)
+      * [Pull Request Reminders](#pull-request-reminders)
       * [Managers-only reminders](#managers-only-reminders)
    * [Reporting](#reporting)
       * [What's being logged?](#whats-being-logged)
@@ -45,7 +46,7 @@ Table of Contents
          * [Finding Google Chat Id (UserId)](#finding-google-chat-id-userid)
    * [FAQ](#faq)
 
-<!-- Added by: tarikguney, at: Sun Feb  7 23:24:33 MST 2021 -->
+<!-- Added by: tarikguney, at: Sat Feb 13 17:37:50 MST 2021 -->
 
 <!--te-->
 
