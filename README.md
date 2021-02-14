@@ -127,6 +127,8 @@ BOARD: Pending in incomplete state of {currentState} for {pendingForDays} days. 
 BOARD: Still open in {currentState} state. Story \"{workItemId}:{workItemTitle}\". Assigned to {userEmail} in {currentIteration}."
 
 BOARD: Still in active state. Story \"{workItemId}:{workItemTitle}\". Assigned to {userEmail} in {currentIteration}.
+
+CODE: Pending pull request \"{pullRequestTitle}:{pullRequestId}\". Created by {createdBy} on {createdDate}.
 ```
 Note that all these logs start with `BOARD` to help you distinguish these log entries from the other sort of logs easily.
 

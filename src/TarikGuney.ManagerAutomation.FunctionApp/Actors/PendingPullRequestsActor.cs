@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Akka.Actor;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 using TarikGuney.ManagerAutomation.CommMessages;
@@ -14,13 +15,16 @@ namespace TarikGuney.ManagerAutomation.Actors
 	{
 		private readonly IOptions<List<DevOpsChatUserMap>> _devOpsChatUserMapOptions;
 		private readonly IOptions<AzureDevOpsSettings> _azureDevOpsSettingsOptions;
+		private readonly ILogger _logger;
 
 		public PendingPullRequestsActor(IOptions<List<DevOpsChatUserMap>> devOpsChatUserMapOptions,
-			IOptions<AzureDevOpsSettings> azureDevOpsSettingsOptions
+			IOptions<AzureDevOpsSettings> azureDevOpsSettingsOptions,
+			ILogger logger
 		)
 		{
 			_devOpsChatUserMapOptions = devOpsChatUserMapOptions;
 			_azureDevOpsSettingsOptions = azureDevOpsSettingsOptions;
+			_logger = logger;
 
 			Receive<IReadOnlyList<JObject>>(StartAnalysingPullRequests);
 		}
@@ -50,20 +54,26 @@ namespace TarikGuney.ManagerAutomation.Actors
 
 				var prTitle = pullRequestJObject["title"]!.Value<string>();
 				var prId = pullRequestJObject["pullRequestId"]!.Value<string>();
-				var urlPathEncodedRepoName = HttpUtility.UrlPathEncode(pullRequestJObject["repository"]["name"].Value<string>());
+				var urlPathEncodedRepoName =
+					HttpUtility.UrlPathEncode(pullRequestJObject["repository"]["name"].Value<string>());
 				var organizationName = _azureDevOpsSettingsOptions.Value.Organization;
 				var urlPathEncodedProjectName = HttpUtility.UrlPathEncode(_azureDevOpsSettingsOptions.Value.Project);
-				var prUrl = $"https://dev.azure.com/{organizationName}/{urlPathEncodedProjectName}/_git/{urlPathEncodedRepoName}/pullrequest/{prId}";
-				var creatorEmail = pullRequestJObject["createdBy"]!["uniqueName"]!.Value<string>();
+				var prUrl =
+					$"https://dev.azure.com/{organizationName}/{urlPathEncodedProjectName}/_git/{urlPathEncodedRepoName}/pullrequest/{prId}";
+				var prCreatorEmail = pullRequestJObject["createdBy"]!["uniqueName"]!.Value<string>();
 				var devOpsGoogleChatUserMap =
 					_devOpsChatUserMapOptions.Value.SingleOrDefault(t =>
-						t.AzureDevOpsEmail.Equals(creatorEmail, StringComparison.InvariantCultureIgnoreCase));
+						t.AzureDevOpsEmail.Equals(prCreatorEmail, StringComparison.InvariantCultureIgnoreCase));
 
 				var userDisplayName = pullRequestJObject["createdBy"]!["displayName"]!.Value<string>();
 
 				var chatDisplayName = _devOpsChatUserMapOptions.Value == null
 					? userDisplayName
 					: $"<users/{devOpsGoogleChatUserMap!.GoogleChatUserId}>";
+
+				_logger.LogInformation(
+					"CODE: Pending pull request \"{pullRequestTitle}:{pullRequestId}\". Created by {createdBy} on {createdDate}.",
+					prTitle, prId, prCreatorEmail, prCreationDate);
 
 				messages.Add(
 					$"{chatDisplayName}, *the pull request* <{prUrl}|{prTitle}> is pending for *{pendingForDays} day(s)*. " +
