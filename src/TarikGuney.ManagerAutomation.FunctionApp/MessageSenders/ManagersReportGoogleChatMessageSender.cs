@@ -19,10 +19,7 @@ namespace TarikGuney.ManagerAutomation.MessageSenders
 
 		public async Task SendMessages(IReadOnlyList<string> messages)
 		{
-			if (!messages.Any())
-			{
-				return;
-			}
+			var allCompleted = messages == null || !messages.Any();
 
 			var httpClient = new HttpClient();
 			var yesterday = DateTime.Now.Subtract(TimeSpan.FromDays(1)).Date.ToShortDateString();
@@ -34,7 +31,7 @@ namespace TarikGuney.ManagerAutomation.MessageSenders
 			var random = new Random();
 			var randomGreeting = greetings[random.Next(0, greetings.Length)];
 
-			var finalMessage = messages.All(string.IsNullOrEmpty)
+			var finalMessage = allCompleted
 				? "The board is looking good and every thing is on track"
 				: string.Join("\n\n", messages);
 

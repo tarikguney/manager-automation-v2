@@ -61,15 +61,17 @@ namespace TarikGuney.ManagerAutomation.Actors
 				var prUrl =
 					$"https://dev.azure.com/{organizationName}/{urlPathEncodedProjectName}/_git/{urlPathEncodedRepoName}/pullrequest/{prId}";
 				var prCreatorEmail = pullRequestJObject["createdBy"]!["uniqueName"]!.Value<string>();
+
 				var devOpsGoogleChatUserMap =
 					_devOpsChatUserMapOptions.Value.SingleOrDefault(t =>
 						t.AzureDevOpsEmail.Equals(prCreatorEmail, StringComparison.InvariantCultureIgnoreCase));
 
-				var userDisplayName = pullRequestJObject["createdBy"]!["displayName"]!.Value<string>();
+				if (devOpsGoogleChatUserMap == null)
+				{
+					continue;
+				}
 
-				var chatDisplayName = _devOpsChatUserMapOptions.Value == null
-					? userDisplayName
-					: $"<users/{devOpsGoogleChatUserMap!.GoogleChatUserId}>";
+				var chatDisplayName = $"<users/{devOpsGoogleChatUserMap!.GoogleChatUserId}>";
 
 				_logger.LogInformation(
 					"CODE: Pending pull request \"{pullRequestTitle}:{pullRequestId}\". Created by {createdBy} on {createdDate}.",

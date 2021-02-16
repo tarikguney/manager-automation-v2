@@ -106,7 +106,7 @@ namespace TarikGuney.ManagerAutomation.AutoFacModules
 				.SetBasePath(context.FunctionAppDirectory)
 				.AddJsonFile("local.settings.json", true, reloadOnChange: true)
 				.AddJsonFile("secrets/appsettings.personal.json", true, reloadOnChange: true)
-				//.AddJsonFile("secrets/appsettings.msi.json", optional: true, reloadOnChange: true)
+				.AddJsonFile("secrets/appsettings.msi.json", optional: true, reloadOnChange: true)
 				.AddEnvironmentVariables()
 				.Build();
 			return config;

@@ -22,7 +22,7 @@ namespace TarikGuney.ManagerAutomation.MessageSenders
 
 		public async Task SendMessages(IReadOnlyList<string> messages)
 		{
-			var allCompleted = !messages.Any();
+			var allCompleted = messages==null || !messages.Any();
 
 			var httpClient = new HttpClient();
 
