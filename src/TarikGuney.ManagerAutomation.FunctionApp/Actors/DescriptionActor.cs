@@ -36,16 +36,20 @@ namespace TarikGuney.ManagerAutomation.Actors
 
         private void HandleIncomingWorkItems(IReadOnlyList<JObject> workItems)
         {
+	        // This finds the user stories and bugs that do not have description.
+	        // Azure DevOps does not return the Description field at all when it is empty.
+	        // Therefore, we are checking if the fields exist at all in the API response.
             var offendingWorkItems = workItems
                 .Where(wi => wi["fields"] is JObject fields &&
                              new List<string>() {"Bug", "User Story"}.Contains(fields["System.WorkItemType"]
                                  .Value<string>()) &&
-                             ((fields["System.WorkItemType"].Value<string>() == "Bug" &&
-                               !fields.ContainsKey("Microsoft.VSTS.TCM.ReproSteps")
-                              ) ||
-                              (fields["System.WorkItemType"].Value<string>() == "User Story" &&
-                               !fields.ContainsKey("System.Description")
-                              )
+                             ((fields["System.WorkItemType"].Value<string>().ToLower() == "bug" &&
+                                // This field might be coming from the old version of Azure DevOps
+								!fields.ContainsKey("Microsoft.VSTS.TCM.ReproSteps") &&
+								// Looks like the following is the description field for the bugs in the later versions of Azure DevOps
+								!fields.ContainsKey("System.Description")) ||
+                              (fields["System.WorkItemType"].Value<string>().ToLower() == "user story" &&
+								!fields.ContainsKey("System.Description"))
                              )).ToList();
 
             if (!offendingWorkItems.Any())
