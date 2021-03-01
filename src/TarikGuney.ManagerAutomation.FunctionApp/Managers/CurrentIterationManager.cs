@@ -45,6 +45,7 @@ namespace TarikGuney.ManagerAutomation.Managers
 			{
 				Context.Stop(Self);
 				Sender.Tell(new AnalysisCompleteResponse());
+				return;
 			}
 
 			var lastDayOfSprint = _currentIterationInfoOptions.Value.FinishDate.Date == DateTime.Now.Date;

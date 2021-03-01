@@ -37,6 +37,7 @@ namespace TarikGuney.ManagerAutomation.Managers
 			{
 				Context.Stop(Self);
 				Sender.Tell(new AnalysisCompleteResponse());
+				return;
 			}
 
 			var currentIterationWorkItems =
